@@ -1,0 +1,61 @@
+id,type,title,author,category,status,license,expiration
+1,Book,La casa junto al lago,Ana Gomez,Novela,false,,
+2,Journal,Revista de Historia Contemporanea,Carlos Martin,Historia,true,,
+3,EBook,Guia rapida de programacion en C++,Lucia Herrera,Informatica,false,EB01,2027-01-15
+4,Book,Cocina mediterranea para principiantes,Maria Lopez,Cocina,true,,
+5,Journal,Revista de Psicologia Aplicada,Javier Ruiz,Psicologia,false,,
+6,EBook,Manual basico de fotografia digital,Diego Sanchez,Fotografia,true,EB02,2027-02-15
+7,Book,Viajar por Europa con poco presupuesto,Laura Perez,Viajes,false,,
+8,Journal,Revista de Gastronomia Creativa,Andres Ortega,Gastronomia,true,,
+9,EBook,Introduccion al diseno de interfaces,Sofia Aguilar,Diseno,false,EB03,2027-03-15
+10,Book,Introduccion al arte moderno,Pedro Castillo,Arte,true,,
+11,Journal,Cuadernos de Economia Domestica,Antonio Vidal,Economia,false,,
+12,EBook,Entrenamiento funcional en casa,Raquel Torres,Deporte,true,EB04,2027-04-15
+13,Book,Psicologia de la vida cotidiana,Luis Morales,Psicologia,false,,
+14,Journal,Revista de Turismo y Cultura,Irene Navarro,Viajes,true,,
+15,EBook,Finanzas personales para jovenes,Manuel Prieto,Economia,false,EB05,2027-05-15
+16,Book,Manual de fotografia urbana,Clara Suarez,Fotografia,true,,
+17,Journal,Boletin de Musica y Sociedad,Paula Rivas,Musica,false,,
+18,EBook,Comunicacion efectiva en publico,Roberto Gil,Comunicacion,true,EB06,2027-06-15
+19,Book,Guia basica de jardineria en casa,Natalia Campos,Jardineria,false,,
+20,Journal,Revista de Cine y Narrativa Visual,Marcos Herrera,Cine,true,,
+21,EBook,Guia basica de jardineria en casa,Patricia Rojas,Jardineria,false,EB07,2027-07-15
+22,Book,Relatos cortos de medianoche,Cesar Nunez,Cuento,true,,
+23,Journal,Cuadernos de Educacion y Escuela,Isabel Munoz,Educacion,false,,
+24,EBook,Productividad y gestion del tiempo,Lidia Ferrer,Autoayuda,true,EB08,2027-08-15
+25,Book,Atlas ilustrado del mundo antiguo,Carolina Vega,Historia,false,,
+26,Journal,Revista de Literatura Hispanica,Jorge Ramirez,Literatura,true,,
+27,EBook,Manual de escritura creativa,Victoria Medina,Escritura,false,EB09,2027-09-15
+28,Book,El cafe de la esquina,Tomas Delgado,Novela,true,,
+29,Journal,Revista de Arquitectura Urbana,Alejandro Pastor,Arquitectura,false,,
+30,EBook,Introduccion al vino y maridaje,Ines Calderon,Gastronomia,true,EB10,2027-10-15
+31,Book,Gestion del tiempo para estudiantes,Mario Esquivel,Autoayuda,false,,
+32,Journal,Cuadernos de Moda y Tendencias,Beatriz Molina,Moda,true,,
+33,EBook,Ciencia detras de la cocina diaria,Claudia Rey,Divulgacion,false,EB11,2027-11-15
+34,Book,Manual de primeros auxilios domesticos,Ricardo Galvez,Salud,true,,
+35,Journal,Revista de Educacion Infantil,Paula Ibanez,Educacion,false,,
+36,EBook,Comunicacion no violenta,Gabriel Torres,Psicologia,true,EB12,2027-12-15
+37,Book,Guia para entender la musica clasica,Elena Costa,Musica,false,,
+38,Journal,Revista de Poesia Contemporanea,Lorena Pardo,Poesia,true,,
+39,EBook,Arquitectura de interiores,Lorena Pardo,Arquitectura,false,EB13,2028-01-15
+40,Book,Pequeno tratado de felicidad cotidiana,Noemi Fuentes,Autoayuda,true,,
+41,Journal,Cuadernos de Cocina Regional,Daniel Romero,Cocina,false,,
+42,EBook,Introduccion al yoga y la meditacion,Marina Soler,Bienestar,true,EB14,2028-02-15
+43,Book,Recetas vegetarianas para cada dia,Alberto Rivas,Cocina,false,,
+44,Journal,Revista de Gestion Cultural,Sara Lozano,Cultura,true,,
+45,EBook,Mitos y leyendas de America Latina,Oscar Vega,Mitologia,false,EB15,2028-03-15
+46,Book,Introduccion al mundo del vino,Carla Nunez,Gastronomia,true,,
+47,Journal,Revista de Fotografia Analogica,Julia Prado,Fotografia,false,,
+48,EBook,Manual de dibujo a carboncillo,Rosa Llorente,Arte,true,EB16,2028-04-15
+49,Book,El viaje de invierno,Ignacio Pardo,Novela,false,,
+50,Journal,Cuadernos de Derecho y Sociedad,Cristian Torres,Derecho,true,,
+51,EBook,Pequenas biografias de grandes mujeres,Lucia Santos,Biografia,false,EB17,2028-05-15
+52,Book,Manual de encuadernacion artesanal,Sofia Navarro,Artesania,true,,
+53,Journal,Revista de Teatro Actual,Fernando Perez,Teatro,false,,
+54,EBook,Guia para organizar tu casa,Helena Rios,Hogar,true,EB18,2028-06-15
+55,Book,Poesias para una tarde de lluvia,Raul Carrasco,Poesia,false,,
+56,Journal,Revista de Psicologia Positiva,Andres Calvo,Psicologia,true,,
+57,EBook,Guia basica de costura creativa,Marcos Oliva,Artesania,false,EB19,2028-07-15
+58,Book,Pequeno atlas de ciudades imaginarias,Marta Cebrian,Ilustracion,true,,
+59,Journal,Revista de Estudios Feministas,Patricia Soria,Estudios de genero,false,,
+60,EBook,El pequeno libro del minimalismo,Fabian Navas,Autoayuda,true,EB20,2028-08-15

@@ -8,6 +8,7 @@
 class Item{
 
     private:
+    int id;
     std::string title,author,category;
     bool status = false;
 
