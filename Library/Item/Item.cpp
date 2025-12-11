@@ -7,6 +7,7 @@
 
 
 Item::Item(int _id, std::string _title, std::string _author, std::string _category, bool _status){
+    id = _id
     title = _title;
     author = _author;
     category = _category;

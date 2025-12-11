@@ -13,8 +13,17 @@ class User{
     int count;
     
     public:
+    incrementCount();
+    decrementCount();
+    bool canBorrow();
+    
     User(){};
     User(int, std::string,std::string, int);
-    
+
+    int getId();
+    std::string getNme();
+    std::string getRol();
+    int getCount();
+
 
 };

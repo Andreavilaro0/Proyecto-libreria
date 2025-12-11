@@ -20,11 +20,12 @@ class Library{
     
     Library(std::vector<Item*> catalog, std::vector<User*> users, std::vector<Loan*> loans);
     
-    void searh(); //author
-    void searh(); //tittle
-    void searh(); //date
-    void searh(); //objet
-    void loan();
+    void searchAuthor(); 
+    void searchTitle()
+    void searchDate(); //date
+    void searchCategory(); 
+    void Doloan();
+    void returnLoan();
     void santion();
     void addUser();
     void deleteUser();
@@ -37,6 +38,7 @@ class Library{
     void checkLoan();
 
 
+//auxiliares
 
-
-};
+void searchItem();
+  
