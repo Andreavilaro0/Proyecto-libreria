@@ -143,7 +143,7 @@ Item* Library::searchItem(std::string itemTitle){
     bool foundItem = false;  
     for(item* item : catalog){
      if (item->getTitle() == itemTitle){
-        return item;       
+        return item;       <
      } 
     } 
     return nullptr;
@@ -241,7 +241,7 @@ Loan* Library::searchLoan(std::string itemLoan){
                     
                 //    std::cout << "Loan found : " << foundLoan->getTitle() << std::endl;
                     
-                
+
                     if (foundItem->getStatus() == true) {
                         
                        for (Loan* x :loans ){
