@@ -30,11 +30,11 @@ User::User(int _id,std::string _name,std::string _rol,int _count){
         return count;
     }
 
-    int User::incrementCount() {
+    void User::incrementCount() {
     count++; 
 }
 
-int User::decrementCount(){
+void User::decrementCount(){
     if (count > 0) {
         count--;
     }
