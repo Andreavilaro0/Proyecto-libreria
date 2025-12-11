@@ -1,29 +1,31 @@
+#ifndef USER_H
+#define USER_H
 
-#include<string>
-#include<iostream>
-#include<vector>
-#include<chrono>
-#include<algorithm>
+#include <algorithm>
+#include <chrono>
+#include <iostream>
+#include <string>
+#include <vector>
 
-class User{
+class User {
 
-    private:
-    int id;
-    std::string name, rol;
-    int count;
-    
-    public:
-    incrementCount();
-    decrementCount();
-    bool canBorrow();
-    
-    User(){};
-    User(int, std::string,std::string, int);
+private:
+  int id;
+  std::string name, rol;
+  int count;
 
-    int getId();
-    std::string getNme();
-    std::string getRol();
-    int getCount();
+public:
+  User() {};
+  User(int, std::string, std::string, int);
 
+  void incrementCount();
+  void decrementCount();
+  bool canBorrow();
 
+  int getId();
+  std::string getNme();
+  std::string getRol();
+  int getCount();
 };
+
+#endif // USER_H

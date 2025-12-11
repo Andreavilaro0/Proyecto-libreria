@@ -1,27 +1,28 @@
+#ifndef ITEM_H
+#define ITEM_H
 
-#include<string>
-#include<iostream>
-#include<vector>
-#include<chrono>
-#include<algorithm>
+#include <string>
+#include <iostream>
+#include <vector>
+#include <chrono>
+#include <algorithm>
 
-class Item{
+class Item {
 
-    private:
-    int id;
-    std::string title,author,category;
-    bool status = false;
+private:
+  int id;
+  std::string title, author, category;
+  bool status = false;
 
-    public:
-    Item(){};
-    Item(int, std::string,std::string,std::string, bool);
-    virtual std::string info() = 0;
+public:
+  Item() {};
+  Item(int, std::string, std::string, std::string, bool);
+  virtual std::string info() = 0;
 
-    std::string getTitle();
-    std::string getAuthor();
-    std::string getCategory();
-    bool getStatus();
- 
-
+  std::string getTitle();
+  std::string getAuthor();
+  std::string getCategory();
+  bool getStatus();
 };
 
+#endif // ITEM_H
