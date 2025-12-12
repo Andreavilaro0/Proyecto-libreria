@@ -1,4 +1,5 @@
 
+
 #include<string>
 #include<iostream>
 #include<vector>
@@ -10,7 +11,13 @@
 class Book : public Item {
     private:
   
-     public:
-     Book(){};
+    public:
+        Book(){};
+        Book(int id, std::string title, std::string author, std::string category, bool status)
+            : Item(id, title, author, category, status) {}
+        
+        std::string info() override {
+            return "Book: " + getTitle() + " by " + getAuthor();
+        }
 };
 

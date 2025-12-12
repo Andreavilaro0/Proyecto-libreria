@@ -1,4 +1,3 @@
-
 #include<string>
 #include<iostream>
 #include<vector>
@@ -20,13 +19,16 @@ class Library{
     
     Library(std::vector<Item*> catalog, std::vector<User*> users, std::vector<Loan*> loans);
     
+
+
     void searchAuthor(); 
-    void searchTitle()
+    void searchTitle();
     void searchDate(); //date
     void searchCategory(); 
-    void Doloan();
+    void doLoan();
     void returnLoan();
     void santion();
+    void penalize();
     void addUser();
     void deleteUser();
     void modifiedUser();
@@ -34,11 +36,14 @@ class Library{
     void addItem();
     void deleteItem();
     void modifiedItem();
-    void returnLoan();
+    void returnItem();
     void checkLoan();
 
 
 //auxiliares
 
-void searchItem();
-  
+Item* searchItem(std::string itemTitle);
+User* searchUser(std::string inputUser);
+Loan* searchLoan(std::string itemLoan);
+     
+};

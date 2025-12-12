@@ -3,10 +3,16 @@
 #include<vector>
 #include<chrono>
 #include<algorithm>
+#include<sstream>
+#include<iomanip>
+#include<ctime>
 #include "Library.h"
 #include "User/User.h"   
 #include "Item/Item.h"  
 #include "Loan/Loan.h"
+#include "Item/E-book.h"
+#include "Item/Book.h"
+#include "Item/Journal.h"
 
 
 void clearConsole() {
@@ -36,7 +42,7 @@ Library::Library(std::vector<Item*> _catalog, std::vector<User*> _users, std::ve
     void search(); //date
     void search(); //objet
     void loan();
-    void santion();
+    void penalize();
     void addUser();
     void deleteUser();
     void modifiedUser();
@@ -44,31 +50,24 @@ Library::Library(std::vector<Item*> _catalog, std::vector<User*> _users, std::ve
     void addItem();
     void deleteItem();
     void modifiedItem();
-    void returnLoan();
-    void checkLoan();
+   
 
 
 
-    Item* item = new Item()
-
-    vector.push_back(item);
-    v.at[i]->
-
-
-
-
- void Library::searchAuthor(){ //author
+void Library::searchAuthor(){ 
 std::string selectAuthor;
 std::vector<Item*>filter;
  
-clearconsole();
+clearConsole();
 std::cout << " write the author that you want to search :";
+std::cin.ignore();
 std::getline(std::cin, selectAuthor);
 for (const auto& authorTosearch : catalog) {
     if (authorTosearch->getAuthor()== selectAuthor){
         filter.push_back(authorTosearch);
     }
-};
+
+}
    
 std::cout << "  ════════════════════════════════════════\n";
 std::cout<< "  SEARCH BY AUTHOR :" << selectAuthor<<std::endl;
@@ -76,11 +75,10 @@ std::cout << "  ═════════════════════�
 
 for (const auto& authorTosearch : filter){
 std::cout<< "  "<<authorTosearch->getAuthor()<<std::endl;
-};
-
-pauseConsole();
-vector.clear;
-clearConsole();
+}
+  pauseConsole();
+  filter.clear();
+  clearConsole();
 } 
 
 void Library::searchTitle(){
@@ -88,38 +86,39 @@ void Library::searchTitle(){
 std::string selectTitle;
 std::vector<Item*>filter;
  
-clearconsole();
+clearConsole();
 std::cout << " write the title that you want to search :";
-std::getline(std::cin, selectTittle);
-for (const auto& tittleTosearch : catalog) {
-    if (authorTosearch->getTitle()== selectTitle){
+std::cin.ignore();
+std::getline(std::cin, selectTitle);
+for (const auto& titleTosearch : catalog) {
+    if (titleTosearch->getTitle()== selectTitle){
         filter.push_back(titleTosearch);
     }
 };
    
 std::cout << "  ════════════════════════════════════════\n";
-std::cout<< "  SEARCH BY TITLE :" << selectAuthor<<std::endl;
+std::cout<< "  SEARCH BY TITLE :" << selectTitle<<std::endl;
 std::cout << "  ════════════════════════════════════════\n";
 
 for (const auto& titleTosearch : filter){
 std::cout<< "  "<<titleTosearch->getTitle()<<std::endl;
-};
-
+    }
 pauseConsole();
-vector.clear;
+filter.clear();
 clearConsole();
-} 
+};
 
 void Library::searchCategory(){
 
 std::string selectCategory;
 std::vector<Item*>filter;
  
-clearconsole();
+clearConsole();
 std::cout << " write the category that you want to search :";
+std::cin.ignore();
 std::getline(std::cin, selectCategory);
 for (const auto& categoryTosearch : catalog) {
-    if (CategoryTosearch->getCategory()== selectCategory){
+    if (categoryTosearch->getCategory()== selectCategory){
         filter.push_back(categoryTosearch);
     }
 };
@@ -133,29 +132,39 @@ std::cout<< "  "<<categoryTosearch->getCategory()<<std::endl;
 };
 
 pauseConsole();
-vector.clear;
+filter.clear();
 clearConsole();
 } //tittle
-
 //funcion auxiliar
-Item* Library::searchItem(std::string itemTitle){
+Item*  Library::searchItem(std::string itemTitle){
      
     bool foundItem = false;  
-    for(item* item : catalog){
+    for(Item* item : catalog){
      if (item->getTitle() == itemTitle){
-        return item;       <
+        return item;       
      } 
     } 
     return nullptr;
   };
-  
-
+ //funcion auxiliar
+User*  Library::searchUser(std::string inputUser){
+     
+    bool foundUsar = false;  
+    for(User * u : users){
+     if (u->getName() == inputUser){
+        return u;       
+     } 
+    } 
+    return nullptr;
+  };
+ 
  void Library::doLoan() {
   
-    clearconsole(); 
+    clearConsole(); 
  
     std::string inputName;
-    std::cout << " User name: ";
+    std::cout << " Username: ";
+    std::cin.ignore();
     std::getline(std::cin, inputName);
 
     User* foundUser = searchUser(inputName);
@@ -170,6 +179,7 @@ Item* Library::searchItem(std::string itemTitle){
                 
                 std::string itemTitle; 
                 std::cout << " Write the item title: ";
+                std::cin.ignore();
                 std::getline(std::cin, itemTitle); 
 
                 // llamamos a la funcion
@@ -202,27 +212,26 @@ Item* Library::searchItem(std::string itemTitle){
             } else {
                 std::cout << "\n User is blocked or reached loan limit." << std::endl;
             }
-        };
-            
-       
-    
+        };             
 //funcion auxiliar
-Loan* Library::searchLoan(std::string itemLoan){
+Loan* Library::searchLoan(std::string itemTitle){
 
     bool foundLoan = false;
-    for (Loan* loan : loans){
-        if (loan->getLoan() == itemLoan){
-            return loan;
+    for (Loan* l: loans){
+        //encapsulo el item que esta en el getloan
+      Item* d = l->getItem();
+        if (d->getTitle() == itemTitle){
+            return l;
         }
     }
     return nullptr;
 }
 
- void library::returnLoan(){
+ void Library::returnItem(){
       std::string inputName;
     std::cout << " User name: ";
+    std::cin.ignore();
     std::getline(std::cin, inputName);
-
     User* foundUser = searchUser(inputName);
 
     if (foundUser == nullptr) {
@@ -230,35 +239,28 @@ Loan* Library::searchLoan(std::string itemLoan){
         return;
     }
     
-                 std::string itemTitle; 
-                std::cout << " Write the item title that wants to return: ";
-                std::getline(std::cin, loanTittle); 
+        std::string itemTitle; 
+        std::cout << " Write the item title that wants to return: ";
+        std::cin.ignore();
+        std::getline(std::cin, itemTitle); 
 
                 // llamamos a la funcion
-                Item* foundLoan = searchLoan(loanTitle);
+                Loan* foundLoan = searchLoan(itemTitle);
 
-                if (foundItem != nullptr) {
+                if (foundLoan != nullptr) {
                     
                 //    std::cout << "Loan found : " << foundLoan->getTitle() << std::endl;
                     
-
-                    if (foundItem->getStatus() == true) {
-                        
-                       for (Loan* x :loans ){
-                        of (foundItem)
-                       }
-
+               // que desmadre es esto, apuntador a prestamo que tiene atributo del item del prestamo encontrado, dentro de este item ves el status
+                    if (foundLoan->getItem()->getStatus() == true) {
+                    std::cout << "Item is already in library \n";
                     }
                     else {
                         auto now = std::chrono::system_clock::now();
-                        
-                        Loan* newLoan = new Loan(foundUser, foundItem, now, now, now);
-
-                        loans.push_back(newLoan);      
-                        foundItem->setStatus(true);    
-                        foundUser->incrementCount(); 
-                        
-                        std::cout << "\n loan successful\n";
+                      
+                        foundUser->decrementCount(); 
+                      //  to do destruye el prestamo de la lista
+                        std::cout << "\n return item successful\n";
                     }
 
                 } else {
@@ -269,42 +271,274 @@ Loan* Library::searchLoan(std::string itemLoan){
 
  }
    
+void Library::addUser(){
 
-
-   void santion(){
- 
-    // ir a lista de prestamos y comparar fecha de prestamo con expiracion
-    // si ha pasado OR mas de 14 dias de la fecha que se lleva ( logica de sansion)
-
-
-   };
-
-   void addUser(){
-
-std::string newUser
+std::string newUserN;
 std::cout<< "Write complete username: ";
-std::getline(cin, newUser);
-std::cout<< endl;
+std::cin.ignore();
+std::getline(std::cin, newUserN);
 std::string newUserR;
-std::cout<< "Write rol (estudent,  , ): ";
-std::cin>>newUserR;
-std::cout<< endl;
-
-//logica escribir user en cvs
-
-   }
+std::cout << std::endl;
+std::cout<< "Write rol (Estudiante, PDI or PAS): ";
+std::cin.ignore();
+std::getline(std::cin, newUserR);
 
 
-
-void deleteUser(){
-
-    std::string userDe;
-    std::cout << " write complete username of the person that you want to delete :";
-    std::getline(cin, userDe);
-
-    //comparar existencia de user y si esta borrar, si no dar erro y obcion salir o intentard de nuevo
+int newId;
+if (users.empty()) {
+    newId = 1;
+} else {
+    newId = users.back()->getId() + 1;
 }
 
-void modifiedUser(){
+User* newUser = new User(newId, newUserN, newUserR, 0);
+
+users.push_back(newUser);
+
+std::cout << "\nId: " << newId << "\nNew user: " << newUserN << " rol: " << newUserR << std::endl;
+}
+
+void Library::deleteUser(){
+
+    std::string userDelete;
+    std::cout << " write complete username of the person that you want to delete :";
+    std::cin.ignore();
+    std::getline(std::cin, userDelete);
+
+User* foundUser = searchUser(userDelete);
+ if (foundUser == nullptr) {
+        std::cout << " User not found in the system." << std::endl;
+        return;
+    }
+    if (foundUser->getCount() != 0){
+        std::cout<<"imposible to delete, user has loans in their name.\n";
+        return;
+
+    } else{
+        std::cout<< " sure that you want to delete user "<< userDelete << " ? (yes/no): ";
+        std::string choise;
+        std::getline(std::cin, choise);
+        if (choise == "yes"||choise == "Yes"||choise == "y"||choise == "Y"){
+   for (auto it = users.begin(); it != users.end(); ++it) {
+            if (*it == foundUser) { 
+                
+            
+                delete foundUser; 
+                
+                users.erase(it); 
+                
+                std::cout << "User deleted successfully.\n";
+                return; 
+            }
+        }
+     }
+   }
+};
+
+void Library::modifiedUser(){
     
+    std::string userMod;
+    std::cout << " write complete username of the person that you want to modify: ";
+    std::cin.ignore();
+    std::getline(std::cin, userMod);
+
+    User* foundUser = searchUser(userMod);
+    if (foundUser == nullptr) {
+        std::cout << " User not found in the system." << std::endl;
+        return;
+    } 
+    
+    std::string userCha;
+    std::cout << " write the characteristic that you want to change (Name, Rol): ";
+    std::getline(std::cin, userCha);
+    
+    if (userCha == "Name" || userCha == "name") {
+        std::string newName;
+        std::cout << " write new name: ";
+        std::getline(std::cin, newName);
+        
+        foundUser->setName(newName);
+        std::cout << " changes done successfully\n";
+        
+    } else if (userCha == "Rol" || userCha == "rol") {
+        std::string newRol;
+        std::cout << " write new rol (Estudiante, PDI, PAS): ";
+        std::getline(std::cin, newRol);
+        
+        if (newRol == "Estudiante" || newRol == "estudiante" || 
+            newRol == "PDI" || newRol == "pdi" || 
+            newRol == "PAS" || newRol == "pas") {
+            foundUser->setRol(newRol);
+            std::cout << " changes done successfully\n";
+        } else {
+            std::cout << "Invalid Rol.\n";
+        }
+        
+    } else {
+        std::cout << "Invalid option.\n";
+    }
+}
+
+void Library::addItem(){
+    
+    std::cout << " Write the title of the new item: ";
+    std::cin.ignore();
+    std::string newItemName;
+    std::getline(std::cin, newItemName);
+
+    Item* foundItem = searchItem(newItemName);
+
+    if (foundItem != nullptr) {
+        std::cout << "Item is already in catalog" << std::endl;
+        return;
+    }
+    
+    std::cout << "  Write the author name: ";
+    std::string newItemAuthor;
+    std::getline(std::cin, newItemAuthor);
+    
+    int newId;
+    if (catalog.empty()) {
+        newId = 1;
+    } else {
+        newId = catalog.back()->getId() + 1;
+    }
+
+    std::cout << "  Write the category: ";
+    std::string newItemcategory;
+    std::getline(std::cin, newItemcategory);
+
+    std::cout << " Write item type (Book, Journal, Ebook): ";
+    std::string newItemtype;
+    std::getline(std::cin, newItemtype);
+    
+    if (newItemtype != "Book" && newItemtype != "book" && 
+        newItemtype != "Journal" && newItemtype != "journal" && 
+        newItemtype != "Ebook" && newItemtype != "ebook") {
+        std::cout << "You cannot save that type of Item\n";
+        return;
+    }
+
+    Item* newItem = nullptr;
+
+    if (newItemtype == "Book" || newItemtype == "book") {
+        
+        newItem = new Book(newId, newItemName, newItemAuthor, newItemcategory, false);
+    } else if (newItemtype == "Journal" || newItemtype == "journal") {
+        
+        newItem = new Journal(newId, newItemName, newItemAuthor, newItemcategory, false);
+    } else if (newItemtype == "Ebook" || newItemtype == "ebook") {
+
+        std::cout << " Write license (EB01): ";
+        std::string newEbookli;
+        std::getline(std::cin, newEbookli);
+
+        std::cout << " Write expiration date (YYYY-MM-DD): ";
+        std::string dateStr;
+        std::getline(std::cin, dateStr);
+        
+       
+        std::tm tm = {};
+        std::istringstream ss(dateStr);
+        ss >> std::get_time(&tm, "%Y-%m-%d");
+        
+     
+        std::time_t time = std::mktime(&tm);
+        std::chrono::system_clock::time_point newEbookex = std::chrono::system_clock::from_time_t(time);
+        
+        newItem = new Ebook(newId, newItemName, newItemAuthor, newItemcategory, false, newEbookli, newEbookex);
+    }
+
+    if (newItem != nullptr) {
+        catalog.push_back(newItem);
+        std::cout << "\nItem creation complete\n";
+    } else {
+        std::cout << " Failed to create item (unknown type or missing subclass definitions)\n";
+    }
+}
+
+void Library::deleteItem(){
+
+    std::string itemDelete;
+    std::cout << " write complete title name of the item that you want to delete :";
+    std::cin.ignore();
+    std::getline(std::cin, itemDelete);
+
+    Item* foundItem = searchItem(itemDelete);
+
+    if (foundItem == nullptr) {
+        std::cout << "Item not found.\n";
+        return;
+    }
+    
+    if (foundItem->getStatus() == true) {
+        std::cout << "Item found : " << foundItem->getTitle() << std::endl;
+        std::cout << "\n but item is already on loan, you can not delete yet.\n";
+        return;
+    }
+    
+    // Item exists and is not on loan
+    std::cout << " are you sure that you want to delete " << itemDelete << " (Y/N)? ";
+    std::string sureDelete;
+    std::getline(std::cin, sureDelete);
+
+    if (sureDelete == "Y" || sureDelete == "y" || sureDelete == "Yes" || sureDelete == "yes") {
+        for (auto it = catalog.begin(); it != catalog.end(); ++it) {
+            if (*it == foundItem) { 
+                catalog.erase(it);      
+                delete foundItem;        
+                std::cout << "Item deleted successfully.\n";
+                return;
+            }
+        }
+    } else {
+        std::cout << "Deletion cancelled.\n";
+    }
+}
+
+ void Library::modifiedItem(){
+
+    std::string itemMod;
+    std::cout << " write complete title of the item that you want to modify: ";
+    std::cin.ignore();
+    std::getline(std::cin, itemMod);
+
+    Item* foundItem = searchItem(itemMod);
+    if (foundItem == nullptr) {
+        std::cout << " title not found in the system." << std::endl;
+        return;
+    } 
+    
+
+    std::cout << " write the characteristic that you want to change (title, author, category): ";
+    std::string itemCha;
+    std::getline(std::cin, itemCha);
+    
+    if (itemCha == "Title" || itemCha == "title") {
+        std::string newTitle;
+        std::cout << " write new title (Manual de fotografia urbana): ";
+        std::getline(std::cin, newTitle);
+        
+        foundItem->setTitle(newTitle);
+        std::cout << " changes done successfully\n";
+        
+    } else if (itemCha == "author" || itemCha == "Author") {
+        std::string newAuthor;
+        std::cout << " write new author (Lidia Ferrer): ";
+        std::getline(std::cin, newAuthor);
+    
+        foundItem->setAuthor(newAuthor);
+        std::cout << " changes done successfully\n";
+        
+    } else if (itemCha == "category" || itemCha == "Category") {
+        std::string newCategory;
+        std::cout << " write new category (Historia): ";
+        std::getline(std::cin, newCategory);
+    
+        foundItem->setCategory(newCategory);
+        std::cout << " changes done successfully\n";
+        
+    } else {
+        std::cout << "Invalid option.\n";
+    }
 }

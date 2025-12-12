@@ -16,6 +16,9 @@ Item::Item(int _id, std::string _title, std::string _author, std::string _catego
 };
   
 
+    int Item::getId(){
+        return id;
+    }
     std::string Item::getTitle(){
         return title;
     }
@@ -28,5 +31,22 @@ Item::Item(int _id, std::string _title, std::string _author, std::string _catego
     bool Item::getStatus(){
         return status;
     };
+
+   void Item::setStatus(bool _status){
+        status = _status;
+
+    }
+
+    void Item::setTitle(std::string _title){
+        title = _title;
+    }
+
+      void Item::setCategory(std::string _category){
+        category = _category;
+      }
+    void Item::setAuthor(std::string _author){
+        author = _author;
+    }
+                     
 
 

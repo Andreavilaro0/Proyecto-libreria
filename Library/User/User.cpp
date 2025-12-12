@@ -15,11 +15,21 @@ User::User(int _id,std::string _name,std::string _rol,int _count){
     
 };
 
-    int  User::getId(){
+
+void User::setName(const std::string& newName) {
+    name = newName;
+
+};
+
+void User::setRol(const std::string& newRol){
+ rol = newRol;
+};
+
+int  User::getId(){
         return id;
     }
 
-    std::string User::getNme(){
+    std::string User::getName(){
         return name;
     };
 

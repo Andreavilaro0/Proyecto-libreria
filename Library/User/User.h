@@ -23,7 +23,9 @@ public:
   bool canBorrow();
 
   int getId();
-  std::string getNme();
+  void setName(const std::string& newNamec);
+  void setRol(const std::string& newRol);
+  std::string getName();
   std::string getRol();
   int getCount();
 };

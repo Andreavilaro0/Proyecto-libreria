@@ -4,7 +4,7 @@
 #include<vector>
 #include<chrono>
 #include<algorithm>
-#include "../User/User.h"
+#include "../User/User.h" 
 #include "../Item/Item.h"
 #include "Loan.h"
 
@@ -18,5 +18,8 @@ Loan::Loan(User* _user, Item* _item, std::chrono::system_clock::time_point _star
     
 };
 
+  Item* Loan::getItem(){
+    return item;
+  }
 
    

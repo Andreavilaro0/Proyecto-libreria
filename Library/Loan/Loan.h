@@ -16,12 +16,16 @@ private:
   User *user;
   Item *item;
   std::chrono::system_clock::time_point startDay, deadline, returnDay;
+  public:
+ Item* getItem();
+  void penalize();
 
-public:
   Loan() {};
-  Loan(User *, Item *, std::chrono::system_clock::time_point,
+  Loan(User*, Item *, std::chrono::system_clock::time_point,
        std::chrono::system_clock::time_point,
        std::chrono::system_clock::time_point);
+
+     
 };
 
 #endif // LOAN_H

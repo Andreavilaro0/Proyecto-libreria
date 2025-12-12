@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/andreaavila/Library/Mobile Documents/com~apple~CloudDocs/Proyecto-libreria-main",
+      "program": "/Users/andreaavila/Library/Mobile Documents/com~apple~CloudDocs/Proyecto-libreria-main/build/Debug/outDebug"
+    }
+  ]
+}
