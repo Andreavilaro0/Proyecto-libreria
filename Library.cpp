@@ -723,6 +723,7 @@ void Library::searchMenu(){
                 break;
             case 2:
                 Library::searchTitle();
+                break;
             case 3:
                 Library::searchCategory();
                 break;
@@ -763,5 +764,5 @@ void Library::cleanAll(){
     }
     catalog.clear();
     
-    std::cout << "Correctly memmory cleaning\n";
+    std::cout << "Correctly memory cleaning\n";
 }

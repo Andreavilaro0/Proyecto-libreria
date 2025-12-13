@@ -96,7 +96,7 @@ int main() {
             library.userMenu();
                 break;
             case 3:
-            library.userMenu();
+            library.LoanrMenu();
                 break;
             case 4:
                library.searchMenu();
