@@ -19,11 +19,11 @@ public:
   Item(int, std::string, std::string, std::string, bool);
   virtual std::string info() = 0;
 
-  int getId();
-  std::string getTitle();
-  std::string getAuthor();
-  std::string getCategory();
-  bool getStatus();
+  int getId()const;
+  std::string getTitle()const;
+  std::string getAuthor()const;
+  std::string getCategory()const;
+  bool getStatus()const;
 
   void setStatus(bool _status);
   void setTitle(std::string _title);

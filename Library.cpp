@@ -14,12 +14,11 @@
 #include "Item/Book.h"
 #include "Item/Journal.h"
 
-
 void clearConsole() {
 #ifdef _WIN32
     std::system("cls");   // Windows
 #else
-    std::system("clear"); // macOS / Linux
+    std::system("clear"); // macOS 
 #endif
 }
 
@@ -32,24 +31,13 @@ void pauseConsole() {
 }
 
 
+
+
 Library::Library(std::vector<Item*> _catalog, std::vector<User*> _users, std::vector<Loan*> _loans){
     catalog = _catalog;
     users = _users;
     loans = _loans;
 };
-
-    void search(); //tittle
-    void search(); //date
-    void search(); //objet
-    void loan();
-    void penalize();
-    void addUser();
-    void deleteUser();
-    void modifiedUser();
-    void blockUser();
-    void addItem();
-    void deleteItem();
-    void modifiedItem();
    
 
 
@@ -58,7 +46,7 @@ void Library::searchAuthor(){
 std::string selectAuthor;
 std::vector<Item*>filter;
  
-clearConsole();
+
 std::cout << " write the author that you want to search :";
 std::cin.ignore();
 std::getline(std::cin, selectAuthor);
@@ -78,7 +66,7 @@ std::cout<< "  "<<authorTosearch->getAuthor()<<std::endl;
 }
   pauseConsole();
   filter.clear();
-  clearConsole();
+
 } 
 
 void Library::searchTitle(){
@@ -86,7 +74,7 @@ void Library::searchTitle(){
 std::string selectTitle;
 std::vector<Item*>filter;
  
-clearConsole();
+
 std::cout << " write the title that you want to search :";
 std::cin.ignore();
 std::getline(std::cin, selectTitle);
@@ -105,7 +93,7 @@ std::cout<< "  "<<titleTosearch->getTitle()<<std::endl;
     }
 pauseConsole();
 filter.clear();
-clearConsole();
+
 };
 
 void Library::searchCategory(){
@@ -541,4 +529,291 @@ void Library::deleteItem(){
     } else {
         std::cout << "Invalid option.\n";
     }
+};
+
+
+
+void showMenu() {
+    std::cout << R"(
+
+=======================================================
+|             UNIVERSITY LIBRARY SYSTEM              |
+=======================================================
+
+ [1] Manage Items
+     ├── Add Item
+     ├── Remove Item
+     └── Edit Item
+
+ [2] Manage Users
+     ├── Add User
+     ├── Remove User
+     └── Edit User
+
+ [3] Handle Loans
+     ├── Loan Item
+     └── Return Item
+
+ [4] Search & Browse
+     ├── Search by Criteria
+     └── List All Records
+
+ [0] Exit and Save
+
+-------------------------------------------------------
+ Choose an option (0–4) and press ENTER:
+=======================================================
+
+)";
+}
+
+void Library::ItemMenu(){
+
+    bool exitProgram = false;
+
+    while (!exitProgram) {
+     clearConsole();
+    std::cout << R"(
+
+=======================================================
+|                  ITEM MANAGEMENT MENU              |
+=======================================================
+
+ [1] Add New Item
+ [2] Remove Existing Item
+ [3] Edit Item Details
+
+ [0] Return to Main Menu
+
+-------------------------------------------------------
+ Choose an option (0–3) and press ENTER:
+=======================================================
+
+)";
+
+    int subChoice;
+    std::cin >> subChoice;
+
+        if(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+            continue; 
+        }
+      
+        switch (subChoice) {
+            case 1:
+                Library::addItem();
+                break;
+            case 2:
+                Library::deleteItem();
+                break;
+            case 3:
+                Library::modifiedItem();
+                break;
+            case 0:
+                std::cout << "saving data...\n";
+                // Filesystem::save...
+                exitProgram = true;
+                break;
+            default:
+                std::cout << "Not valid option.\n";
+                 pauseConsole();
+        }
+    }
+
+}; 
+
+
+
+
+void Library::userMenu(){
+
+    bool exitProgram = false;
+
+    while (!exitProgram) {
+     clearConsole();
+    std::cout << R"(
+
+=======================================================
+|                 USER MANAGEMENT MENU               |
+=======================================================
+
+ [1] Add New User
+ [2] Delete User
+ [3] Modified User
+
+ [0] Return to Main Menu
+
+-------------------------------------------------------
+ Choose an option (0–3) and press ENTER:
+=======================================================
+
+)";
+
+    int subChoice;
+    std::cin >> subChoice;
+
+        if(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+            continue; 
+        }
+      
+        switch (subChoice) {
+            case 1:
+                Library::addUser();
+                break;
+            case 2:
+                Library::deleteUser();
+                break;
+            case 3:
+                Library::modifiedUser();
+                break;
+            case 0:
+                std::cout << "saving data...\n";
+                // Filesystem::save...
+                exitProgram = true;
+                break;
+            default:
+                std::cout << "not valid option.\n";
+                 pauseConsole();
+        }
+    }
+
+}; 
+
+
+void Library::LoanrMenu(){
+
+    bool exitProgram = false;
+
+    while (!exitProgram) {
+     clearConsole();
+       std::cout << R"(
+
+=======================================================
+|                  LOAN SERVICES MENU                |
+=======================================================
+
+ [1] Loan an Item
+ [2] Return an Item
+
+ [0] Return to Main Menu
+
+-------------------------------------------------------
+ Choose an option (0–2) and press ENTER:
+=======================================================
+
+)";
+
+    int subChoice;
+    std::cin >> subChoice;
+
+        if(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+            continue; 
+        }
+      
+        switch (subChoice) {
+            case 1:
+                Library::doLoan();
+                break;
+            case 2:
+                Library::returnLoan();
+                break;
+            case 0:
+                std::cout << "saving data...\n";
+                // Filesystem::save...
+                exitProgram = true;
+                break;
+            default:
+                std::cout << "not valid option.\n";
+                 pauseConsole();
+        }
+    }
+
+}; 
+
+void Library::searchMenu(){
+
+    bool exitProgram = false;
+
+    while (!exitProgram) {
+     clearConsole();
+    std::cout << R"(
+
+=======================================================
+|                SEARCH & BROWSE MENU                |
+=======================================================
+
+ [1] Search by Author
+ [2] Search by Title
+ [3] Search by category
+
+
+ [0] Return to Main Menu
+
+-------------------------------------------------------
+ Choose an option (0–2) and press ENTER:
+=======================================================
+
+)";
+
+    int subChoice;
+    std::cin >> subChoice;
+
+        if(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+            continue; 
+        }
+      
+        switch (subChoice) {
+            case 1:
+                Library::searchAuthor();
+                break;
+            case 2:
+                Library::searchTitle();
+            case 3:
+                Library::searchCategory();
+                break;
+            case 0:
+                std::cout << "saving data...\n";
+                // Filesystem::save...
+                exitProgram = true;
+                break;
+            default:
+                std::cout << "not valid option.\n";
+                 pauseConsole();
+        }
+    }
+
+}; 
+
+
+
+void Library::cleanAll(){
+    std::cout << "cleaning memory...\n";
+
+    //  Borrar los Préstamos
+    
+    for( auto const i : loans){
+        delete i;
+    }
+    loans.clear();
+
+    //  Borrar los Usuarios
+    for (User* i : users) {
+        delete i;
+    }
+    users.clear();
+
+    //  Borrar el Catálogo (Items)
+    for (Item* i : catalog) {
+        delete i; 
+    }
+    catalog.clear();
+    
+    std::cout << "Correctly memmory cleaning\n";
 }

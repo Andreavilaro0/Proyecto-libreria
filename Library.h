@@ -46,4 +46,15 @@ Item* searchItem(std::string itemTitle);
 User* searchUser(std::string inputUser);
 Loan* searchLoan(std::string itemLoan);
      
+
+//submenus
+void ItemMenu(); 
+void userMenu();
+void LoanrMenu();
+void searchMenu();
+
+//borrar memoria
+ void cleanAll();
+
+
 };
