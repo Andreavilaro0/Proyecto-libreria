@@ -7,6 +7,10 @@
 #include "Library/Item/Item.h"
 #include "Library/Loan/Loan.h"
 
+// Forward declarations of utility functions
+void clearConsole();
+void pauseConsole();
+void showMenu();
 
 class Library{
     private:
@@ -26,7 +30,6 @@ class Library{
     void searchDate(); //date
     void searchCategory(); 
     void doLoan();
-    void returnLoan();
     void santion();
     void penalize();
     void addUser();

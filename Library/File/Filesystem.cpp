@@ -4,7 +4,7 @@
 #include "../Item/Item.h"
 #include "../Item/Book.h"
 #include "../Item/Journal.h"
-#include "../Item/EBook.h"
+#include "../Item/E-book.h"
 #include "../User/User.h"
 #include "../Loan/Loan.h"
 

@@ -7,30 +7,12 @@
 #include<iomanip>
 #include<ctime>
 #include "Library.h"
-#include "User/User.h"   
-#include "Item/Item.h"  
-#include "Loan/Loan.h"
-#include "Item/E-book.h"
-#include "Item/Book.h"
-#include "Item/Journal.h"
-
-void clearConsole() {
-#ifdef _WIN32
-    std::system("cls");   // Windows
-#else
-    std::system("clear"); // macOS 
-#endif
-}
-
-void pauseConsole() {
-#ifdef _WIN32
-    system("pause");     // Windows
-#else
-    system("read -n 1 -s -r -p \"Press any key to continue\""); 
-#endif
-}
-
-
+#include "Library/User/User.h"   
+#include "Library/Item/Item.h"  
+#include "Library/Loan/Loan.h"
+#include "Library/Item/E-book.h"
+#include "Library/Item/Book.h"
+#include "Library/Item/Journal.h"
 
 
 Library::Library(std::vector<Item*> _catalog, std::vector<User*> _users, std::vector<Loan*> _loans){
@@ -533,40 +515,6 @@ void Library::deleteItem(){
 
 
 
-void showMenu() {
-    std::cout << R"(
-
-=======================================================
-|             UNIVERSITY LIBRARY SYSTEM              |
-=======================================================
-
- [1] Manage Items
-     ├── Add Item
-     ├── Remove Item
-     └── Edit Item
-
- [2] Manage Users
-     ├── Add User
-     ├── Remove User
-     └── Edit User
-
- [3] Handle Loans
-     ├── Loan Item
-     └── Return Item
-
- [4] Search & Browse
-     ├── Search by Criteria
-     └── List All Records
-
- [0] Exit and Save
-
--------------------------------------------------------
- Choose an option (0–4) and press ENTER:
-=======================================================
-
-)";
-}
-
 void Library::ItemMenu(){
 
     bool exitProgram = false;
@@ -720,7 +668,7 @@ void Library::LoanrMenu(){
                 Library::doLoan();
                 break;
             case 2:
-                Library::returnLoan();
+                Library::returnItem();
                 break;
             case 0:
                 std::cout << "saving data...\n";
