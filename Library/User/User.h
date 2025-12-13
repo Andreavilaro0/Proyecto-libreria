@@ -22,12 +22,12 @@ public:
   void decrementCount();
   bool canBorrow();
 
-  int getId();
+  int getId() const;
   void setName(const std::string& newNamec);
   void setRol(const std::string& newRol);
-  std::string getName();
-  std::string getRol();
-  int getCount();
+  std::string getName() const;
+  std::string getRol() const;
+  int getCount() const;
 };
 
 #endif // USER_H

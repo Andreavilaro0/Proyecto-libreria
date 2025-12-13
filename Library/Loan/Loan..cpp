@@ -1,4 +1,5 @@
 
+
 #include<string>
 #include<iostream>
 #include<vector>
@@ -18,8 +19,6 @@ Loan::Loan(User* _user, Item* _item, std::chrono::system_clock::time_point _star
     
 };
 
-  Item* Loan::getItem(){
-    return item;
-  }
-
+// Los getters están definidos inline en Loan.h
+   
    

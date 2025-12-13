@@ -23,8 +23,8 @@ class Ebook : public Item {
             return "Ebook: " + getTitle() + " by " + getAuthor() + " (License: " + license + ")";
         }
         
-        std::string getLicense() { return license; }
-        std::chrono::system_clock::time_point getExpiration() { return expiration; }
+        std::string getLicense() const { return license; }
+        std::chrono::system_clock::time_point getExpiration() const { return expiration; }
 };
 
 

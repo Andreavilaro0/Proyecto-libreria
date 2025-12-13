@@ -25,18 +25,18 @@ void User::setRol(const std::string& newRol){
  rol = newRol;
 };
 
-int  User::getId(){
+int User::getId() const{
         return id;
     }
 
-    std::string User::getName(){
+    std::string User::getName() const{
         return name;
     };
 
-    std::string User::getRol(){
+    std::string User::getRol() const{
         return rol;
     };
-    int User::getCount(){
+    int User::getCount() const{
         return count;
     }
 

@@ -16,19 +16,19 @@ Item::Item(int _id, std::string _title, std::string _author, std::string _catego
 };
   
 
-    int Item::getId(){
+    int Item::getId() const{
         return id;
     }
-    std::string Item::getTitle(){
+    std::string Item::getTitle() const{
         return title;
     }
-    std::string Item::getAuthor(){
+    std::string Item::getAuthor() const{
         return author;
     }
-    std::string Item::getCategory(){
+    std::string Item::getCategory() const{
         return category;
     }
-    bool Item::getStatus(){
+    bool Item::getStatus() const{
         return status;
     };
 
