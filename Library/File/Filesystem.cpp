@@ -301,7 +301,7 @@ bool Filesystem::saveLoans(const std::string& filename,
     file << "userId,itemId,startDate,deadline,returnDate\n";
 
     for (const Loan* l : loans) {
-        if (!l) continue;
+        if (!l || !l->getUser() || !l->getItem()) continue;
 
         file << l->getUser()->getId() << ','
              << l->getItem()->getId() << ','

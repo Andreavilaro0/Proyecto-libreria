@@ -566,6 +566,7 @@ void Library::ItemMenu(){
             default:
                 std::cout << "Not valid option.\n";
                  pauseConsole();
+                 break;
         }
     }
 
@@ -625,6 +626,7 @@ void Library::userMenu(){
             default:
                 std::cout << "not valid option.\n";
                  pauseConsole();
+                 break;
         }
     }
 
@@ -678,6 +680,7 @@ void Library::LoanrMenu(){
             default:
                 std::cout << "not valid option.\n";
                  pauseConsole();
+                 break;
         }
     }
 
@@ -735,6 +738,7 @@ void Library::searchMenu(){
             default:
                 std::cout << "not valid option.\n";
                  pauseConsole();
+                 break;
         }
     }
 

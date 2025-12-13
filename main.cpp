@@ -105,8 +105,7 @@ int main() {
                 std::cout << "Saving data...\n";
                 Filesystem::saveItems("items.csv", catalog);
                 Filesystem::saveUsers("users.csv", users);
-                // Note: saveLoans method doesn't exist in Filesystem class
-                // TODO: Add saveLoans if needed or remove this line
+                Filesystem::saveLoans("loans.csv", loans);
                 exitProgram = true;
                 break;
             default:
