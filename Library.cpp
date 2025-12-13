@@ -747,7 +747,7 @@ void Library::cleanAll(){
 
     //  Borrar los Préstamos
     
-    for( auto const i : loans){
+    for(Loan* const i : loans){
         delete i;
     }
     loans.clear();
@@ -764,5 +764,5 @@ void Library::cleanAll(){
     }
     catalog.clear();
     
-    std::cout << "Correctly memory cleaning\n";
+    std::cout << "Memory cleaned correctly\n";
 }
