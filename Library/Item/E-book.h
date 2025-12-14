@@ -1,4 +1,5 @@
-
+#ifndef EBOOK_H
+#define EBOOK_H
 
 #include<string>
 #include<iostream>
@@ -27,6 +28,4 @@ class Ebook : public Item {
         std::chrono::system_clock::time_point getExpiration() const { return expiration; }
 };
 
-
-
-
+#endif // EBOOK_H

@@ -7,29 +7,12 @@
 #include<iomanip>
 #include<ctime>
 #include "Library.h"
-#include "User/User.h"   
-#include "Item/Item.h"  
-#include "Loan/Loan.h"
-#include "Item/E-book.h"
-#include "Item/Book.h"
-#include "Item/Journal.h"
-
-void clearConsole() {
-#ifdef _WIN32
-    std::system("cls");   // Windows
-#else
-    std::system("clear"); // macOS 
-#endif
-}
-
-void pauseConsole() {
-#ifdef _WIN32
-    system("pause");     // Windows
-#else
-    system("read -n 1 -s -r -p \"Press any key to continue\""); 
-#endif
-}
-
+#include "Library/User/User.h"   
+#include "Library/Item/Item.h"  
+#include "Library/Loan/Loan.h"
+#include "Library/Item/E-book.h"
+#include "Library/Item/Book.h"
+#include "Library/Item/Journal.h"
 
 
 
@@ -51,10 +34,17 @@ std::cout << " write the author that you want to search :";
 std::cin.ignore();
 std::getline(std::cin, selectAuthor);
 for (const auto& authorTosearch : catalog) {
-    if (authorTosearch->getAuthor()== selectAuthor){
+    if  (authorTosearch->getAuthor().find(selectAuthor) != std::string::npos)
+{
         filter.push_back(authorTosearch);
     }
 
+}
+
+if (!filter.empty()) {
+    std::sort(filter.begin(), filter.end(), [](Item* a, Item* b) {
+        return a->getTitle() < b->getTitle();
+    });
 }
    
 std::cout << "  ════════════════════════════════════════\n";
@@ -62,9 +52,10 @@ std::cout<< "  SEARCH BY AUTHOR :" << selectAuthor<<std::endl;
 std::cout << "  ════════════════════════════════════════\n";
 
 for (const auto& authorTosearch : filter){
-std::cout<< "  "<<authorTosearch->getAuthor()<<std::endl;
+std::cout<< "  "<<authorTosearch->getTitle()<<std::endl;
 }
   pauseConsole();
+  std::cout << "Press any key to continue...";
   filter.clear();
 
 } 
@@ -75,15 +66,20 @@ std::string selectTitle;
 std::vector<Item*>filter;
  
 
-std::cout << " write the title that you want to search :";
+std::cout << " write the title that you want to search. (or part of it) :";
 std::cin.ignore();
 std::getline(std::cin, selectTitle);
 for (const auto& titleTosearch : catalog) {
-    if (titleTosearch->getTitle()== selectTitle){
+    if (titleTosearch->getTitle().find(selectTitle) != std::string::npos){
         filter.push_back(titleTosearch);
     }
 };
-   
+   if (!filter.empty()) {
+    std::sort(filter.begin(), filter.end(), [](Item* a, Item* b) {
+        return a->getTitle() < b->getTitle();
+    });
+}
+
 std::cout << "  ════════════════════════════════════════\n";
 std::cout<< "  SEARCH BY TITLE :" << selectTitle<<std::endl;
 std::cout << "  ════════════════════════════════════════\n";
@@ -101,16 +97,21 @@ void Library::searchCategory(){
 std::string selectCategory;
 std::vector<Item*>filter;
  
-clearConsole();
+
 std::cout << " write the category that you want to search :";
 std::cin.ignore();
 std::getline(std::cin, selectCategory);
 for (const auto& categoryTosearch : catalog) {
-    if (categoryTosearch->getCategory()== selectCategory){
+    if (categoryTosearch->getCategory().find(selectCategory) != std::string::npos){
         filter.push_back(categoryTosearch);
     }
 };
-   
+if (!filter.empty()) {
+    std::sort(filter.begin(), filter.end(), [](Item* a, Item* b) {
+        return a->getCategory() < b->getCategory();
+    });
+}
+
 std::cout << "  ════════════════════════════════════════\n";
 std::cout<< "  SEARCH BY CATEGORY :" << selectCategory<<std::endl;
 std::cout << "  ════════════════════════════════════════\n";
@@ -321,7 +322,7 @@ if (users.empty()) {
     newId = users.back()->getId() + 1;
 }
 
-User* newUser = new User(newId, newUserN, newUserR, 0);
+User* newUser = new User(newId, newUserN, newUserR, 0,0.0);
 
 users.push_back(newUser);
 
@@ -482,6 +483,7 @@ void Library::addItem(){
     if (newItem != nullptr) {
         catalog.push_back(newItem);
         std::cout << "\nItem creation complete\n";
+        std::cout<< "Please click any key to continue...\n";
     } else {
         std::cout << " Failed to create item (unknown type or missing subclass definitions)\n";
     }
@@ -574,41 +576,6 @@ void Library::deleteItem(){
 };
 
 
-
-void showMenu() {
-    std::cout << R"(
-
-=======================================================
-|             UNIVERSITY LIBRARY SYSTEM              |
-=======================================================
-
- [1] Manage Items
-     ├── Add Item
-     ├── Remove Item
-     └── Edit Item
-
- [2] Manage Users
-     ├── Add User
-     ├── Remove User
-     └── Edit User
-
- [3] Handle Loans
-     ├── Loan Item
-     └── Return Item
-
- [4] Search & Browse
-     ├── Search by Criteria
-     └── List All Records
-
- [0] Exit and Save
-
--------------------------------------------------------
- Choose an option (0–4) and press ENTER:
-=======================================================
-
-)";
-}
-
 void Library::ItemMenu(){
 
     bool exitProgram = false;
@@ -665,9 +632,6 @@ void Library::ItemMenu(){
 
 }; 
 
-
-
-
 void Library::userMenu(){
 
     bool exitProgram = false;
@@ -723,7 +687,6 @@ void Library::userMenu(){
     }
 
 }; 
-
 
 void Library::LoanrMenu(){
 
@@ -832,8 +795,6 @@ void Library::searchMenu(){
     }
 
 }; 
-
-
 
 void Library::cleanAll(){
     std::cout << "cleaning memory...\n";

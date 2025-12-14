@@ -30,13 +30,10 @@ public:
   std::string getRol();
   int getCount();
 
-void addSanction(double amount) {
-}
-double getSanction() {  
-}
+void addSanction(double amount);
+double getSanction();
 
-void paySanction() {
-}
+void paySanction();
 
 
 

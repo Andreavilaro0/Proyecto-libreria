@@ -6,10 +6,7 @@
 #include"Item.h"
 #include"E-book.h"
 
+// El constructor ya está implementado inline en E-book.h
+// No se necesita implementación adicional aquí
 
-Ebook::Ebook(int _id, std::string _title, std::string _author, std::string _category, bool _status, std::string _license, std::chrono::system_clock::time_point _expiration) : Item(_id, _title, _author, _category, _status){
-
-    license = _license;
-    expiration = _expiration;
-};
 

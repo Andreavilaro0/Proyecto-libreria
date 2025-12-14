@@ -1,3 +1,6 @@
+#ifndef LIBRARY_H
+#define LIBRARY_H
+
 #include<string>
 #include<iostream>
 #include<vector>
@@ -6,7 +9,10 @@
 #include "Library/User/User.h"
 #include "Library/Item/Item.h"
 #include "Library/Loan/Loan.h"
+#include "Library/Item/E-book.h"
 
+void clearConsole();
+void pauseConsole();
 
 class Library{
     private:
@@ -23,11 +29,10 @@ class Library{
 
     void searchAuthor(); 
     void searchTitle();
-    void searchDate(); //date
+    void searchDate(); 
     void searchCategory(); 
     void doLoan();
     void returnLoan();
-    void santion();
     void penalize();
     void addUser();
     void deleteUser();
@@ -36,8 +41,7 @@ class Library{
     void addItem();
     void deleteItem();
     void modifiedItem();
-    void returnItem();
-    void checkLoan();
+   
 
 
 //auxiliares
@@ -58,3 +62,5 @@ void searchMenu();
 
 
 };
+
+#endif // LIBRARY_H

@@ -1,4 +1,5 @@
-
+#ifndef JOURNAL_H
+#define JOURNAL_H
 
 #include<string>
 #include<iostream>
@@ -21,8 +22,4 @@ class Journal : public Item {
         }
 };
 
-
-
-
-
-
+#endif // JOURNAL_H

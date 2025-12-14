@@ -14,7 +14,7 @@ Item::Item(int _id, std::string _title, std::string _author, std::string _catego
     status = _status;
 
 };
-    virtual ~Item() {}
+
 
     int Item::getId()const{
         return id;

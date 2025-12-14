@@ -30,7 +30,7 @@ public:
    void setAuthor(std::string _author);
     void setCategory(std::string _category);
     
-        virtual ~Item() {}
+    virtual ~Item() {}
 };
 
 #endif // ITEM_H

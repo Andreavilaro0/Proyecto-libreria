@@ -33,6 +33,5 @@ private:
 
  
 
-  void penalize();
 
 #endif // LOAN_H
