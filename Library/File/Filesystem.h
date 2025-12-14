@@ -21,6 +21,12 @@ public:
     // Guardado a CSV (si lo necesitas)
     static bool saveItems(const std::string& filename, const std::vector<Item*>& catalog);
     static bool saveUsers(const std::string& filename, const std::vector<User*>& users);
+    static bool saveLoans(const std::string& filename, std::vector<Loan*>& loans);
+
+    // Borrado de elementos
+    static bool deleteItemById(int id, std::vector<Item*>& catalog);
+    static bool deleteUserById(int id, std::vector<User*>& users);
+    static bool deleteLoanByIndex(size_t index, std::vector<Loan*>& loans);
 };
 
 #endif // FILESYSTEM_H

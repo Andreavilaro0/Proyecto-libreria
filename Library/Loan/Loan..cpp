@@ -22,6 +22,10 @@ Loan::Loan(User* _user, Item* _item, std::chrono::system_clock::time_point _star
     return item;
   }
   
+  User* Loan::getUser()const{
+    return user;
+  }
+  
 
   std::chrono::system_clock::time_point Loan::getStartDay() {
     return startDay;

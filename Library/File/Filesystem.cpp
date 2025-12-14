@@ -16,7 +16,7 @@
 #include <iomanip>   // std::put_time
 #include <algorithm> // std::remove_if
 
-// ---------------- FECHA: YYYY-MM-DD → time_point ------------------
+// FECHA: YYYY-MM-DD → time_point 
 
 static std::chrono::system_clock::time_point parseDate(const std::string& dateStr) {
     if (dateStr.size() != 10) {
@@ -36,7 +36,7 @@ static std::chrono::system_clock::time_point parseDate(const std::string& dateSt
     return std::chrono::system_clock::from_time_t(tt);
 }
 
-// ---------------- time_point → "YYYY-MM-DD" -----------------------
+// time_point → "YYYY-MM-DD" 
 
 static std::string formatDate(const std::chrono::system_clock::time_point& tp) {
     if (tp == std::chrono::system_clock::time_point{}) {
@@ -56,9 +56,7 @@ static std::string formatDate(const std::chrono::system_clock::time_point& tp) {
     return oss.str();
 }
 
-// -------------------------- ITEMS -------------------------------
-//
-// Formato esperado:
+// read items
 // id,type,title,author,category,status,license,expiration
 
 bool Filesystem::loadItems(const std::string& filename, std::vector<Item*>& catalog) {
@@ -111,9 +109,7 @@ bool Filesystem::loadItems(const std::string& filename, std::vector<Item*>& cata
     return true;
 }
 
-// --------------------------- USERS ------------------------------
-//
-// Formato esperado:
+// read users
 // id,name,role,count
 
 bool Filesystem::loadUsers(const std::string& filename, std::vector<User*>& users) {
@@ -131,16 +127,26 @@ bool Filesystem::loadUsers(const std::string& filename, std::vector<User*>& user
 
         std::stringstream ss(line);
 
-        std::string idStr, name, role, countStr;
+        std::string idStr, name, role, countStr, sanctionStr;
         std::getline(ss, idStr, ',');
         std::getline(ss, name, ',');
         std::getline(ss, role, ',');
         std::getline(ss, countStr, ',');
+        std::getline(ss, sanctionStr, ',');
 
         int id    = std::stoi(idStr);
         int count = std::stoi(countStr);
 
-        User* user = new User(id, name, role, count);
+        double sanction = 0.0;
+        try {
+            if (!sanctionStr.empty()) {
+                sanction = std::stod(sanctionStr);
+            }
+        } catch (...) {
+            sanction = 0.0; 
+        }
+
+       User* user = new User(id, name, role, count, sanction);
         users.push_back(user);
     }
 
@@ -270,15 +276,16 @@ bool Filesystem::saveUsers(const std::string& filename,
         return false;
     }
 
-    file << "id,name,role,count\n";
+    file << "id,name,role,count,sanction\n";
 
-    for (const User* u : users) {
+    for (User* u : users) {
         if (!u) continue;
 
         file << u->getId() << ','
              << u->getName() << ','
              << u->getRol() << ','
-             << u->getCount()
+             << u->getCount() << ','
+             << u->getSanction()
              << '\n';
     }
 
@@ -288,7 +295,7 @@ bool Filesystem::saveUsers(const std::string& filename,
 //  save loans
 
 bool Filesystem::saveLoans(const std::string& filename,
-                           const std::vector<Loan*>& loans) {
+                           std::vector<Loan*>& loans) {
     std::ofstream file(filename);
     if (!file.is_open()) {
         std::cerr << "[ERROR] No se pudo abrir el fichero para guardar loans: "
@@ -298,14 +305,23 @@ bool Filesystem::saveLoans(const std::string& filename,
 
     file << "userId,itemId,startDate,deadline,returnDate\n";
 
-    for (const Loan* l : loans) {
+    // Use non-const Loan* because Loan's getters are non-const in the current implementation.
+    for (Loan* l : loans) {
         if (!l) continue;
 
-        file << l->getUser()->getId() << ','
-             << l->getItem()->getId() << ','
+        // Get user and item pointers from the loan
+        User* user = l->getUser();
+        Item* item = l->getItem();
+        if (!user || !item) continue;
+
+        int userId = user->getId();
+        int itemId = item->getId();
+
+        file << userId << ','
+             << itemId << ','
              << formatDate(l->getStartDay()) << ','
              << formatDate(l->getDeadline()) << ','
-             << formatDate(l->getReturnDay())
+             << formatDate(l->getreturnDay())
              << '\n';
     }
 

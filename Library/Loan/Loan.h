@@ -18,6 +18,7 @@ private:
   std::chrono::system_clock::time_point startDay, deadline, returnDay;
   public:
  Item* getItem()const;
+ User* getUser()const;
   void penalize()const;
 
   Loan() {};

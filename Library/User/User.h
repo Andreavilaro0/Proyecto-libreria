@@ -29,6 +29,17 @@ public:
   std::string getName();
   std::string getRol();
   int getCount();
+
+void addSanction(double amount) {
+}
+double getSanction() {  
+}
+
+void paySanction() {
+}
+
+
+
 };
 
 #endif // USER_H
