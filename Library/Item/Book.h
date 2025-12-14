@@ -17,7 +17,7 @@ class Book : public Item {
         Book(int id, std::string title, std::string author, std::string category, bool status)
             : Item(id, title, author, category, status) {}
         
-        std::string info() override {
+        std::string info() const override {
             return "Book: " + getTitle() + " by " + getAuthor();
         }
 };

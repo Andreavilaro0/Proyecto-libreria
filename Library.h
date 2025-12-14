@@ -41,6 +41,7 @@ class Library{
     void addItem();
     void deleteItem();
     void modifiedItem();
+    void generateReport();
    
 
 
@@ -63,4 +64,4 @@ void searchMenu();
 
 };
 
-#endif // LIBRARY_H
+#endif 

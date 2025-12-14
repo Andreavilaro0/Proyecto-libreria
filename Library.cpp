@@ -207,14 +207,18 @@ User*  Library::searchUser(std::string inputUser){
                         
                         std::cout << "\n loan successful\n";
                     }
-
+                   pauseConsole();
+              
                 } else {
                     std::cout << "Item not found: \n";
-                    
+                    pauseConsole();
+                   
                 }  
 
             } else {
                 std::cout << "\n User is blocked or reached loan limit." << std::endl;
+               pauseConsole();
+                  
             }
         };             
 //funcion auxiliar
@@ -232,6 +236,7 @@ Loan* Library::searchLoan(std::string itemTitle){
 }
 
  void Library::returnLoan(){
+    clearConsole();
       std::string inputName;
     std::cout << " User name: ";
     std::getline(std::cin, inputName);
@@ -273,6 +278,7 @@ Loan* Library::searchLoan(std::string itemTitle){
                // que desmadre es esto, apuntador a prestamo que tiene atributo del item del prestamo encontrado, dentro de este item ves el status
                     if (foundLoan->getItem()->getStatus() == false) {
                     std::cout << "Item is already in library \n";
+                    pauseConsole();
                     }
                  foundUser->decrementCount();
                 foundLoan->getItem()->setStatus(false); // Libro disponible
@@ -293,6 +299,7 @@ Loan* Library::searchLoan(std::string itemTitle){
                 loanDeleted = true; 
                 
                 std::cout << "\n Return item successful.\n";
+                pauseConsole();
             } else {
                 // Solo avanzamos si NO hemos borrado nada
                 ++it; 
@@ -301,10 +308,11 @@ Loan* Library::searchLoan(std::string itemTitle){
 
     } else {
         std::cout << "Item not found / Not currently on loan.\n";
+        pauseConsole();
     }
 }
 void Library::addUser(){
-
+clearConsole();
 std::string newUserN;
 std::cout<< "Write complete username: ";
 std::cin.ignore();
@@ -328,10 +336,11 @@ User* newUser = new User(newId, newUserN, newUserR, 0,0.0);
 users.push_back(newUser);
 
 std::cout << "\nId: " << newId << "\nNew user: " << newUserN << " rol: " << newUserR << std::endl;
+pauseConsole();
 }
 
 void Library::deleteUser(){
-
+clearConsole();
     std::string userDelete;
     std::cout << " write complete username of the person that you want to delete :";
     std::cin.ignore();
@@ -340,10 +349,12 @@ void Library::deleteUser(){
 User* foundUser = searchUser(userDelete);
  if (foundUser == nullptr) {
         std::cout << " User not found in the system." << std::endl;
+        pauseConsole();
         return;
     }
     if (foundUser->getCount() != 0){
         std::cout<<"imposible to delete, user has loans in their name.\n";
+        pauseConsole();
         return;
 
     } else{
@@ -360,6 +371,7 @@ User* foundUser = searchUser(userDelete);
                 users.erase(it); 
                 
                 std::cout << "User deleted successfully.\n";
+                pauseConsole();
                 return; 
             }
         }
@@ -368,7 +380,7 @@ User* foundUser = searchUser(userDelete);
 };
 
 void Library::modifiedUser(){
-    
+    clearConsole();
     std::string userMod;
     std::cout << " write complete username of the person that you want to modify: ";
     std::cin.ignore();
@@ -377,6 +389,7 @@ void Library::modifiedUser(){
     User* foundUser = searchUser(userMod);
     if (foundUser == nullptr) {
         std::cout << " User not found in the system." << std::endl;
+        pauseConsole();
         return;
     } 
     
@@ -391,6 +404,7 @@ void Library::modifiedUser(){
         
         foundUser->setName(newName);
         std::cout << " changes done successfully\n";
+        pauseConsole();
         
     } else if (userCha == "Rol" || userCha == "rol") {
         std::string newRol;
@@ -402,33 +416,46 @@ void Library::modifiedUser(){
             newRol == "PAS" || newRol == "pas") {
             foundUser->setRol(newRol);
             std::cout << " changes done successfully\n";
+            pauseConsole();
         } else {
             std::cout << "Invalid Rol.\n";
+            pauseConsole();
         }
         
     } else {
         std::cout << "Invalid option.\n";
+        pauseConsole();
     }
 }
 
 void Library::addItem(){
-    
+    clearConsole();
     std::cout << " Write the title of the new item: ";
     std::cin.ignore();
     std::string newItemName;
     std::getline(std::cin, newItemName);
+    if (newItemName.find(',') != std::string::npos) {
+        std::cout << "\n[ERROR] Invalid character: Commas (,) are not allowed in titles.\n";
+        std::cout << "This system uses CSV format. Please remove the comma.\n";
+        pauseConsole();
+        return;
 
     Item* foundItem = searchItem(newItemName);
 
     if (foundItem != nullptr) {
         std::cout << "Item is already in catalog" << std::endl;
+        pauseConsole();
         return;
     }
     
     std::cout << "  Write the author name: ";
     std::string newItemAuthor;
     std::getline(std::cin, newItemAuthor);
-    
+    if (newItemAuthor.find(',') != std::string::npos) {
+        std::cout << "\n[ERROR] Invalid character: Commas (,) are not allowed in author names.\n";
+        pauseConsole();
+        return; }
+
     int newId;
     if (catalog.empty()) {
         newId = 1;
@@ -439,6 +466,12 @@ void Library::addItem(){
     std::cout << "  Write the category: ";
     std::string newItemcategory;
     std::getline(std::cin, newItemcategory);
+
+    if (newItemcategory.find(',') != std::string::npos) {
+        std::cout << "\n[ERROR] Invalid character: Commas (,) are not allowed in categories.\n";
+        pauseConsole();
+        return;
+    }
 
     std::cout << " Write item type (Book, Journal, Ebook): ";
     std::string newItemtype;
@@ -484,14 +517,16 @@ void Library::addItem(){
     if (newItem != nullptr) {
         catalog.push_back(newItem);
         std::cout << "\nItem creation complete\n";
-        std::cout<< "Please click any key to continue...\n";
+        pauseConsole();
+       
     } else {
         std::cout << " Failed to create item (unknown type or missing subclass definitions)\n";
+        pauseConsole();
     }
 }
 
 void Library::deleteItem(){
-
+clearConsole();
     std::string itemDelete;
     std::cout << " write complete title name of the item that you want to delete :";
     std::cin.ignore();
@@ -507,6 +542,7 @@ void Library::deleteItem(){
     if (foundItem->getStatus() == true) {
         std::cout << "Item found : " << foundItem->getTitle() << std::endl;
         std::cout << "\n but item is already on loan, you can not delete yet.\n";
+        pauseConsole();
         return;
     }
     
@@ -521,16 +557,18 @@ void Library::deleteItem(){
                 catalog.erase(it);      
                 delete foundItem;        
                 std::cout << "Item deleted successfully.\n";
+                pauseConsole();
                 return;
             }
         }
     } else {
         std::cout << "Deletion cancelled.\n";
+        pauseConsole();
     }
 }
 
  void Library::modifiedItem(){
-
+clearConsole();
     std::string itemMod;
     std::cout << " write complete title of the item that you want to modify: ";
     std::cin.ignore();
@@ -539,6 +577,7 @@ void Library::deleteItem(){
     Item* foundItem = searchItem(itemMod);
     if (foundItem == nullptr) {
         std::cout << " title not found in the system." << std::endl;
+        pauseConsole();
         return;
     } 
     
@@ -570,15 +609,17 @@ void Library::deleteItem(){
     
         foundItem->setCategory(newCategory);
         std::cout << " changes done successfully\n";
+        pauseConsole();
         
     } else {
         std::cout << "Invalid option.\n";
+        pauseConsole();
     }
 };
 
 
 void Library::ItemMenu(){
-
+clearConsole();
     bool exitProgram = false;
 
     while (!exitProgram) {
@@ -837,3 +878,48 @@ void Library::saveAll() {
     
 };
 
+void Library::generateReport(){
+    clearConsole();
+    std::cout << "========================================\n";
+    std::cout << "       LIBRARY STATISTICS REPORT        \n";
+    std::cout << "========================================\n";
+
+    // Iniciar contadores
+    int countEstudiante = 0;
+    int countPDI = 0;
+    int countPAS = 0;
+    int totalActive = loans.size(); // préstamos activos
+
+    // Recorremos los préstamos activos
+    for (Loan* loan : loans) {
+        User* u = loan->getUser();
+        if (u != nullptr) {
+            std::string role = u->getRol();
+            
+            // Comparamos el rol 
+            if (role == "Estudiante" || role == "estudiante") {
+                countEstudiante++;
+            } else if (role == "PDI" || role == "pdi") {
+                countPDI++;
+            } else if (role == "PAS" || role == "pas") {
+                countPAS++;
+            }
+        }
+    }
+
+    
+    std::cout << "\n[Active Loans Summary]\n";
+    std::cout << "----------------------\n";
+    std::cout << " Total Active Loans: " << totalActive << "\n\n";
+    
+    std::cout << " By User Role:\n";
+    std::cout << " - Students: " << countEstudiante << "\n";
+    std::cout << " - PDI:      " << countPDI << "\n";
+    std::cout << " - PAS:      " << countPAS << "\n";
+
+    
+
+    std::cout << "\n========================================\n";
+    
+    pauseConsole(); 
+}

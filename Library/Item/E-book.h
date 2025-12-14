@@ -20,7 +20,7 @@ class Ebook : public Item {
               std::string license, std::chrono::system_clock::time_point expiration)
             : Item(id, title, author, category, status), license(license), expiration(expiration) {}
         
-        std::string info() override {
+        std::string info() const override {
             return "Ebook: " + getTitle() + " by " + getAuthor() + " (License: " + license + ")";
         }
         

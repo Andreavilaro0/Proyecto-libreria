@@ -36,16 +36,24 @@ void showMenu() {
      ├── Add Item
      ├── Remove Item
      └── Edit Item
+
  [2] Manage Users
      ├── Add User
      ├── Remove User
      └── Edit User
+
  [3] Handle Loans
      ├── Loan Item
      └── Return Item
+
  [4] Search & Browse
      ├── Search by Criteria
      └── List All Records
+
+ [5] Reports & Statistics  
+     └── Active Loans by Role
+
+
  [0] Exit and Save
 -------------------------------------------------------
  Choose an option (0–4) and press ENTER:
@@ -96,6 +104,9 @@ int main() {
                 break;
             case 4:
                library.searchMenu();
+                break;
+            case 5:
+               library.generateReport();
                 break;
             case 0:
                library.saveAll();

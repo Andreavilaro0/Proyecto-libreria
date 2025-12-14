@@ -17,7 +17,7 @@ private:
 public:
   Item() {};
   Item(int, std::string, std::string, std::string, bool);
-  virtual std::string info() = 0;
+ virtual std::string info() const = 0;
 
   int getId()const;
   std::string getTitle()const;
