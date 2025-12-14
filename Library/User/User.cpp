@@ -80,3 +80,8 @@ double User::getSanction() {
 void User::paySanction() {
     sanctionAmount = 0.0; 
 }
+
+std::ostream& operator<<(std::ostream& os, const User& user) {
+    os << "ID: " << user.id << " | " << user.name << " (" << user.rol << ")";
+    return os;
+}

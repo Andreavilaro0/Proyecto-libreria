@@ -31,6 +31,7 @@ public:
     void setCategory(std::string _category);
     
     virtual ~Item() {}
+    friend std::ostream& operator<<(std::ostream& os, const Item& item);
 };
 
 #endif // ITEM_H

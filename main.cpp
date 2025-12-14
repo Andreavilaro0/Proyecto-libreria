@@ -56,7 +56,7 @@ void showMenu() {
 
  [0] Exit and Save
 -------------------------------------------------------
- Choose an option (0–4) and press ENTER:
+ Choose an option (0–5) and press ENTER:
 =======================================================
 )";
 }

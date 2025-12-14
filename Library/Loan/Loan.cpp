@@ -37,3 +37,14 @@ std::chrono::system_clock::time_point Loan::getreturnDay() {
     return returnDay;
 }
    
+
+//al final ni lo use
+std::ostream& operator<<(std::ostream& os, const Loan& loan) {
+    std::string userName = (loan.user != nullptr) ? loan.user->getName() : "uknow User";
+    std::string itemTitle = (loan.item != nullptr) ? loan.item->getTitle() : "uknow Item";
+
+
+    os << userName << " has loan " << itemTitle;
+  
+    return os;
+}

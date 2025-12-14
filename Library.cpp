@@ -128,7 +128,7 @@ clearConsole();
 //funcion auxiliar para buscar item 
 Item*  Library::searchItem(std::string itemTitle){
      
-    bool foundItem = false;  
+    
     for(Item* item : catalog){
      if (item->getTitle() == itemTitle){
         return item;       
@@ -139,7 +139,7 @@ Item*  Library::searchItem(std::string itemTitle){
  //funcion auxiliar para buscar usuario
 User*  Library::searchUser(std::string inputUser){
      
-    bool foundUsar = false;  
+   
     for(User * u : users){
      if (u->getName() == inputUser){
         return u;       
@@ -224,7 +224,7 @@ User*  Library::searchUser(std::string inputUser){
 //funcion auxiliar
 Loan* Library::searchLoan(std::string itemTitle){
 
-    bool foundLoan = false;
+    
     for (Loan* l: loans){
         //encapsulo el item que esta en el getloan
       Item* d = l->getItem();
@@ -439,6 +439,7 @@ void Library::addItem(){
         std::cout << "This system uses CSV format. Please remove the comma.\n";
         pauseConsole();
         return;
+    }
 
     Item* foundItem = searchItem(newItemName);
 
@@ -842,7 +843,6 @@ void Library::cleanAll(){
     std::cout << "cleaning memory...\n";
 
     //  Borrar los Préstamos
-    
     for( auto const i : loans){
         delete i;
     }

@@ -29,6 +29,8 @@ private:
      std::chrono::system_clock::time_point getStartDay();
      std::chrono::system_clock::time_point getDeadline();
      std::chrono::system_clock::time_point getreturnDay();
+
+     friend std::ostream& operator<<(std::ostream& os, const Loan& loan);
 };
 
  

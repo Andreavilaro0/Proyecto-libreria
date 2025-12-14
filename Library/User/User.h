@@ -35,6 +35,7 @@ double getSanction();
 
 void paySanction();
 
+friend std::ostream& operator<<(std::ostream& os, const User& user);
 
 
 };

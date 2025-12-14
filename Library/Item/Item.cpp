@@ -49,4 +49,8 @@ Item::Item(int _id, std::string _title, std::string _author, std::string _catego
     }
                      
 
-
+std::ostream& operator<<(std::ostream& os, const Item& item) {
+  
+    os << item.info(); 
+    return os;
+}
