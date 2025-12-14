@@ -23,7 +23,11 @@ Library::Library(std::vector<Item*> _catalog, std::vector<User*> _users, std::ve
     loans = _loans;
 };
    
+Library::~Library() {
 
+cleanAll();
+
+}
 
 // funcion para buscar por autor
 void Library::searchAuthor(){ 
@@ -149,86 +153,88 @@ User*  Library::searchUser(std::string inputUser){
   };
  
   //funcion para hacer un prestamo
- void Library::doLoan() {
-  
+void Library::doLoan() {
     clearConsole(); 
- 
+
     std::string inputName;
     std::cout << " Username: ";
-    std::cin.ignore();
+
+    std::cin.ignore(); 
     std::getline(std::cin, inputName);
 
     User* foundUser = searchUser(inputName);
 
-
     if (foundUser == nullptr) {
         std::cout << " User not found in the system." << std::endl;
+        pauseConsole();
         return;
     }
-            if (foundUser->canBorrow()) {
-                
-                std::cout << "\n User can borrow books.\n";
-                
-                std::string itemTitle; 
-                std::cout << " Write the item title: ";
-                std::cin.ignore();
-                std::getline(std::cin, itemTitle); 
 
-                // llamamos a la funcion de buscar item
-                Item* foundItem = searchItem(itemTitle);
-
-                if (foundItem != nullptr) {
-                    
-                    std::cout << "item found : " << foundItem->getTitle() << std::endl;
-                    // verificar fecha expiracion (si es ebook)
-                    Ebook* ebookPtr = dynamic_cast<Ebook*>(foundItem);
-                    if (ebookPtr != nullptr) { 
-                     auto now = std::chrono::system_clock::now(); 
+    if (foundUser->canBorrow()) {
+        std::cout << "\n User can borrow books.\n";
         
-                    if (now > ebookPtr->getExpiration()) { // ¿Hoy es mayor que la fecha límite?
-                    std::cout << "\n Expiration dat is already past.\n";
-                    pauseConsole();
-                    std::cout << "\n press any key to return.\n";
-                    return; //salimos, no se puede
-                         }
-                     }
+        std::string itemTitle; 
+        std::cout << " Write the item title: ";
+  
+        std::getline(std::cin, itemTitle); 
 
-                    if (foundItem->getStatus() == true) {
-                        std::cout << "\n but item is already on loan, sorry.";
-                    }
-                    else {
-                        auto now = std::chrono::system_clock::now();
-                        
-                        Loan* newLoan = new Loan(foundUser, foundItem, now, now, now);
+        // 1 Buscamos específicamente una copia libre
+        Item* selectedItem = nullptr;
 
-                        loans.push_back(newLoan);      
-                        foundItem->setStatus(true);    
-                        foundUser->incrementCount(); 
-                        
-                        std::cout << "\n loan successful\n";
-                    }
-                   pauseConsole();
-              
-                } else {
-                    std::cout << "Item not found: \n";
-                    pauseConsole();
-                   
-                }  
-
-            } else {
-                std::cout << "\n User is blocked or reached loan limit." << std::endl;
-               pauseConsole();
-                  
+        for (Item* i : catalog) {
+            // Buscamos coincidencia de título Y que no este prestado
+            if (i->getTitle() == itemTitle && i->getStatus() == false) {
+                selectedItem = i;
+                break; // ¡Encontramos uno libre
             }
-        };             
+        }
+
+        
+        if (selectedItem != nullptr) {
+            
+            std::cout << " Item found available: " << selectedItem->getTitle() << std::endl;
+            
+            // Verificar Ebook sobre el item seleccionado
+            Ebook* ebookPtr = dynamic_cast<Ebook*>(selectedItem);
+            if (ebookPtr != nullptr) { 
+                auto now = std::chrono::system_clock::now(); 
+                if (now > ebookPtr->getExpiration()) { 
+                    std::cout << "\n [ERROR] This license has expired.\n";
+                    pauseConsole();
+                    return; 
+                }
+            }
+
+          
+            auto now = std::chrono::system_clock::now();
+            
+            Loan* newLoan = new Loan(foundUser, selectedItem, now, now, now);
+            loans.push_back(newLoan);      
+            
+            selectedItem->setStatus(true); //  ESTA copia como prestada
+            foundUser->incrementCount(); 
+            
+            std::cout << "\n Loan successful!\n";
+            pauseConsole();
+      
+        } else {
+            //  no hay copias o todas están prestadas
+            std::cout << " Item not found or all copies are currently on loan.\n";
+            pauseConsole();
+        }  
+
+    } else {
+        std::cout << "\n [BLOCK] User is blocked or reached loan limit." << std::endl;
+        pauseConsole();
+    }
+}            
 //funcion auxiliar
-Loan* Library::searchLoan(std::string itemTitle){
+Loan* Library::searchLoan(std::string itemTitle, User* u){
 
     
     for (Loan* l: loans){
         //encapsulo el item que esta en el getloan
-      Item* d = l->getItem();
-        if (d->getTitle() == itemTitle){
+if (l->getItem()->getTitle() == itemTitle && l->getUser() == u) {
             return l;
         }
     }
@@ -252,7 +258,7 @@ Loan* Library::searchLoan(std::string itemTitle){
         std::getline(std::cin, itemTitle); 
 
                 // llamamos a la funcion
-                Loan* foundLoan = searchLoan(itemTitle);
+                Loan* foundLoan = searchLoan(itemTitle, foundUser);
 
         if (foundLoan != nullptr) {
 
@@ -823,7 +829,9 @@ void Library::searchMenu(){
                 break;
             case 2:
                 Library::searchTitle();
+                break;
             case 3:
+           
                 Library::searchCategory();
                 break;
             case 0:

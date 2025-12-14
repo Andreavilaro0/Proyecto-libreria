@@ -22,6 +22,7 @@ class Library{
 
     public:
     Library(){};
+    ~Library();
     
     Library(std::vector<Item*> catalog, std::vector<User*> users, std::vector<Loan*> loans);
     
@@ -49,7 +50,7 @@ class Library{
 
 Item* searchItem(std::string itemTitle);
 User* searchUser(std::string inputUser);
-Loan* searchLoan(std::string itemLoan);
+Loan* searchLoan(std::string itemTitle, User* user);
 Ebook* searchExpirationDate(std::string foundEbook);
 
 //submenus
