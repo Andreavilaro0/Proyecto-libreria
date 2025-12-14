@@ -59,3 +59,4 @@ id,type,title,author,category,status,license,expiration
 58,Book,Pequeno atlas de ciudades imaginarias,Marta Cebrian,Ilustracion,true,,
 59,Journal,Revista de Estudios Feministas,Patricia Soria,Estudios de genero,false,,
 60,EBook,El pequeno libro del minimalismo,Fabian Navas,Autoayuda,true,EB20,2028-08-15
+61,Book,Harry Potter y el prisionero de azkaban,JK Rowling,Novela,false,,

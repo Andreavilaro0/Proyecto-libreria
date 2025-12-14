@@ -61,9 +61,9 @@ int main() {
     std::vector<Loan*> loans;
 
     // Cargar datos 
-    Filesystem::loadItems("items.csv", catalog);
-    Filesystem::loadUsers("users.csv", users);
-    Filesystem::loadLoans("loans.csv", loans, users, catalog);
+    Filesystem::loadItems("Library/File/items.csv", catalog);
+    Filesystem::loadUsers("Library/File/user.csv", users);
+    Filesystem::loadLoans("Library/File/loan.csv", loans, users, catalog);
 
     Library library(catalog, users, loans); // objeto principal con los datos cargados
 
@@ -98,12 +98,10 @@ int main() {
                library.searchMenu();
                 break;
             case 0:
+               library.saveAll();
                 std::cout << "Saving data...\n";
-                Filesystem::saveItems("items.csv", catalog);
-                Filesystem::saveUsers("users.csv", users);
-                // Note: saveLoans method doesn't exist in Filesystem class
-                // TODO: Add saveLoans if needed or remove this line
                 exitProgram = true;
+                library.cleanAll();
                 break;
             default:
                 std::cout << "Not valid option.\n";

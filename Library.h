@@ -59,7 +59,7 @@ void searchMenu();
 
 //borrar memoria
  void cleanAll();
-
+ void saveAll();
 
 };
 

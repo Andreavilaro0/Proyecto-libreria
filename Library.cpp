@@ -13,6 +13,7 @@
 #include "Library/Item/E-book.h"
 #include "Library/Item/Book.h"
 #include "Library/Item/Journal.h"
+#include "Library/File/Filesystem.h"
 
 
 
@@ -817,6 +818,22 @@ void Library::cleanAll(){
         delete i; 
     }
     catalog.clear();
+
+
     
     std::cout << "Correctly memmory cleaning\n";
-}
+    pauseConsole();
+    std::cout << "press any key to exit.\n";
+
+};
+
+void Library::saveAll() {
+    std::cout << "Saving data from Library...\n";
+
+  Filesystem::saveItems("Library/File/items.csv", catalog);
+  Filesystem::saveUsers("Library/File/user.csv", users);
+  Filesystem::saveLoans("Library/File/loan.csv", loans);
+
+    
+};
+

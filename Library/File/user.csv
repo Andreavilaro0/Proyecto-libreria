@@ -1,21 +1,21 @@
-id,name,rol,count,sanction
+id,name,role,count,sanction
 1,Ana Moreno,Estudiante,3,0
-2,Carlos Lopez,Estudiante,0,15.00
+2,Carlos Lopez,Estudiante,0,15
 3,Lucia Garcia,Estudiante,2,0
-4,Javier Ruiz,Estudiante,2,4.50
+4,Javier Ruiz,Estudiante,2,4.5
 5,Maria Fernandez,Estudiante,1,0
 6,Pedro Sanchez,Estudiante,1,0
 7,Elena Navarro,Estudiante,2,0
 8,Miguel Torres,Estudiante,1,0
-9,Laura Gomez,Estudiante,1,2.00
+9,Laura Gomez,Estudiante,1,2
 10,Diego Castillo,Estudiante,1,0
 11,Carmen Diaz,PDI,2,0
 12,Ruben Herrera,PDI,1,0
-13,Beatriz Molina,PDI,3,7.50
+13,Beatriz Molina,PDI,3,7.5
 14,Alberto Vega,PDI,2,0
 15,Claudia Serrano,PDI,2,0
 16,Fernando Arias,PDI,1,0
-17,Isabel Romero,PDI,0,25.50
+17,Isabel Romero,PDI,0,25.5
 18,Hector Aguilar,PAS,0,0
 19,Natalia Campos,PAS,1,0
 20,Raul Jimenez,PAS,1,0
