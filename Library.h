@@ -45,7 +45,7 @@ class Library{
 Item* searchItem(std::string itemTitle);
 User* searchUser(std::string inputUser);
 Loan* searchLoan(std::string itemLoan);
-     
+Ebook* searchExpirationDate(std::string foundEbook);
 
 //submenus
 void ItemMenu(); 

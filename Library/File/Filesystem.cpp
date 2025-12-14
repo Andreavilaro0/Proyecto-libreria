@@ -147,9 +147,7 @@ bool Filesystem::loadUsers(const std::string& filename, std::vector<User*>& user
     return true;
 }
 
-// --------------------------- LOANS -------------------------------
-//
-// Formato esperado:
+// read loans
 // userId,itemId,startDate,deadline,returnDate
 // 1,3,2025-01-10,2025-01-20,2025-01-18
 
@@ -215,7 +213,7 @@ bool Filesystem::loadLoans(const std::string& filename,
     return true;
 }
 
-// ------------------------ SAVE: ITEMS ----------------------------
+//  save items
 
 bool Filesystem::saveItems(const std::string& filename,
                            const std::vector<Item*>& catalog) {
@@ -261,7 +259,7 @@ bool Filesystem::saveItems(const std::string& filename,
     return true;
 }
 
-// ------------------------ SAVE: USERS ----------------------------
+//  save users
 
 bool Filesystem::saveUsers(const std::string& filename,
                            const std::vector<User*>& users) {
@@ -287,7 +285,7 @@ bool Filesystem::saveUsers(const std::string& filename,
     return true;
 }
 
-// ------------------------ SAVE: LOANS ----------------------------
+//  save loans
 
 bool Filesystem::saveLoans(const std::string& filename,
                            const std::vector<Loan*>& loans) {
@@ -314,7 +312,7 @@ bool Filesystem::saveLoans(const std::string& filename,
     return true;
 }
 
-// ------------------------ DELETE: ITEMS --------------------------
+//  Delete items
 
 bool Filesystem::deleteItemById(int id, std::vector<Item*>& catalog) {
     bool found = false;
@@ -333,7 +331,7 @@ bool Filesystem::deleteItemById(int id, std::vector<Item*>& catalog) {
     return found;
 }
 
-// ------------------------ DELETE: USERS --------------------------
+//  Delete user
 
 bool Filesystem::deleteUserById(int id, std::vector<User*>& users) {
     bool found = false;
@@ -352,7 +350,7 @@ bool Filesystem::deleteUserById(int id, std::vector<User*>& users) {
     return found;
 }
 
-// ------------------------ DELETE: LOANS --------------------------
+//  Delete loans
 
 bool Filesystem::deleteLoanByIndex(size_t index, std::vector<Loan*>& loans) {
     if (index >= loans.size()) {

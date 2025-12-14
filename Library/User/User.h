@@ -13,10 +13,11 @@ private:
   int id;
   std::string name, rol;
   int count;
+  double sanctionAmount = 0.0;
 
 public:
   User() {};
-  User(int, std::string, std::string, int);
+  User(int, std::string, std::string, int, double);
 
   void incrementCount();
   void decrementCount();

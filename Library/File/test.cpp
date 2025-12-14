@@ -1,7 +1,46 @@
 #include <iostream>
 #include <vector>
+
+// Forward declarations
+class Item;
+class User;
+class Loan;
+class Book;
+class Journal;
+class Ebook;
+class Filesystem;
+
+// Item.h tiene un error: le falta }; al final
+// Este workaround lo soluciona para test.cpp
+#define ITEM_H
+#include <string>
+#include <algorithm>
+#include <chrono>
+
+class Item {
+private:
+  int id;
+  std::string title, author, category;
+  bool status = false;
+
+public:
+  Item() {};
+  Item(int, std::string, std::string, std::string, bool);
+  virtual std::string info() = 0;
+
+  int getId()const;
+  std::string getTitle()const;
+  std::string getAuthor()const;
+  std::string getCategory()const;
+  bool getStatus()const;
+
+  void setStatus(bool _status);
+  void setTitle(std::string _title);
+  void setAuthor(std::string _author);
+  void setCategory(std::string _category);
+};
+
 #include "Filesystem.h"
-#include "../Item/Item.h"
 #include "../Item/Book.h"
 #include "../Item/Journal.h"
 #include "../Item/E-book.h"
@@ -50,23 +89,30 @@ int main() {
     cout << "\n--- ITEMS ---" << endl;
     for (auto* item : catalog) {
         cout << "ID: " << item->getId()
-             << " | Tipo: " << item->getType()
              << " | Titulo: " << item->getTitle()
+             << " | Autor: " << item->getAuthor()
              << " | Categoria: " << item->getCategory()
-             << " | Estado: " << (item->isAvailable() ? "Disponible" : "Prestado")
+             << " | Estado: " << (item->getStatus() ? "Prestado" : "Disponible")
              << endl;
 
         // Mostrar atributos específicos según tipo
-        if (auto* b = dynamic_cast<Book*>(item)) {
-            cout << "   Autor: " << b->getAuthor() << endl;
+        Book* b = dynamic_cast<Book*>(item);
+        if (b) {
+            cout << "   Tipo: Libro" << endl;
         } 
-        else if (auto* j = dynamic_cast<Journal*>(item)) {
-            cout << "   Autor: " << j->getAuthor() << endl;
-        }
-        else if (auto* e = dynamic_cast<EBook*>(item)) {
-            cout << "   Autor: " << e->getAuthor()
-                 << " | Licencia: " << e->getLicense()
-                 << endl;
+        else {
+            Journal* j = dynamic_cast<Journal*>(item);
+            if (j) {
+                cout << "   Tipo: Revista" << endl;
+            }
+            else {
+                Ebook* e = dynamic_cast<Ebook*>(item);
+                if (e) {
+                    cout << "   Tipo: E-book"
+                         << " | Licencia: " << e->getLicense()
+                         << endl;
+                }
+            }
         }
     }
 
@@ -75,18 +121,15 @@ int main() {
     for (auto* u : users) {
         cout << "ID: " << u->getId()
              << " | Nombre: " << u->getName()
-             << " | Rol: " << static_cast<int>(u->getRole())
+             << " | Rol: " << u->getRol()
              << endl;
     }
 
     // Préstamos
     cout << "\n--- PRESTAMOS ---" << endl;
     for (auto* l : loans) {
-        cout << "Loan ID: " << l->getLoanId()
-             << " | Usuario: " << l->getUser()->getName()
-             << " | Item: " << l->getItem()->getTitle()
-             << " | Fecha prestamo: " << l->getStartDate().toString()
-             << " | Fecha devolución: " << l->getEndDate().toString()
+        cout << "Item: " << l->getItem()->getTitle()
+             << " | Autor: " << l->getItem()->getAuthor()
              << endl;
     }
 

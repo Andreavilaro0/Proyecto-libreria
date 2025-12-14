@@ -41,7 +41,7 @@ Library::Library(std::vector<Item*> _catalog, std::vector<User*> _users, std::ve
    
 
 
-
+// funcion para buscar por autor
 void Library::searchAuthor(){ 
 std::string selectAuthor;
 std::vector<Item*>filter;
@@ -68,7 +68,7 @@ std::cout<< "  "<<authorTosearch->getAuthor()<<std::endl;
   filter.clear();
 
 } 
-
+// funcion para buscar por titulo
 void Library::searchTitle(){
 
 std::string selectTitle;
@@ -95,7 +95,7 @@ pauseConsole();
 filter.clear();
 
 };
-
+// funcion para buscar por gategoria
 void Library::searchCategory(){
 
 std::string selectCategory;
@@ -123,7 +123,7 @@ pauseConsole();
 filter.clear();
 clearConsole();
 } //tittle
-//funcion auxiliar
+//funcion auxiliar para buscar item 
 Item*  Library::searchItem(std::string itemTitle){
      
     bool foundItem = false;  
@@ -134,7 +134,7 @@ Item*  Library::searchItem(std::string itemTitle){
     } 
     return nullptr;
   };
- //funcion auxiliar
+ //funcion auxiliar para buscar usuario
 User*  Library::searchUser(std::string inputUser){
      
     bool foundUsar = false;  
@@ -146,6 +146,7 @@ User*  Library::searchUser(std::string inputUser){
     return nullptr;
   };
  
+  //funcion para hacer un prestamo
  void Library::doLoan() {
   
     clearConsole(); 
@@ -156,6 +157,7 @@ User*  Library::searchUser(std::string inputUser){
     std::getline(std::cin, inputName);
 
     User* foundUser = searchUser(inputName);
+
 
     if (foundUser == nullptr) {
         std::cout << " User not found in the system." << std::endl;
@@ -170,13 +172,25 @@ User*  Library::searchUser(std::string inputUser){
                 std::cin.ignore();
                 std::getline(std::cin, itemTitle); 
 
-                // llamamos a la funcion
+                // llamamos a la funcion de buscar item
                 Item* foundItem = searchItem(itemTitle);
 
                 if (foundItem != nullptr) {
                     
-                    std::cout << "Book found : " << foundItem->getTitle() << std::endl;
-                    
+                    std::cout << "item found : " << foundItem->getTitle() << std::endl;
+                    // verificar fecha expiracion (si es ebook)
+                    Ebook* ebookPtr = dynamic_cast<Ebook*>(foundItem);
+                    if (ebookPtr != nullptr) { 
+                     auto now = std::chrono::system_clock::now(); 
+        
+                    if (now > ebookPtr->getExpiration()) { // ¿Hoy es mayor que la fecha límite?
+                    std::cout << "\n Expiration dat is already past.\n";
+                    pauseConsole();
+                    std::cout << "\n press any key to return.\n";
+                    return; //salimos, no se puede
+                         }
+                     }
+
                     if (foundItem->getStatus() == true) {
                         std::cout << "\n but item is already on loan, sorry.";
                     }
@@ -215,10 +229,9 @@ Loan* Library::searchLoan(std::string itemTitle){
     return nullptr;
 }
 
- void Library::returnItem(){
+ void Library::returnLoan(){
       std::string inputName;
     std::cout << " User name: ";
-    std::cin.ignore();
     std::getline(std::cin, inputName);
     User* foundUser = searchUser(inputName);
 
@@ -229,36 +242,65 @@ Loan* Library::searchLoan(std::string itemTitle){
     
         std::string itemTitle; 
         std::cout << " Write the item title that wants to return: ";
-        std::cin.ignore();
         std::getline(std::cin, itemTitle); 
 
                 // llamamos a la funcion
                 Loan* foundLoan = searchLoan(itemTitle);
 
-                if (foundLoan != nullptr) {
-                    
-                //    std::cout << "Loan found : " << foundLoan->getTitle() << std::endl;
-                    
+        if (foundLoan != nullptr) {
+
+        
+        auto now = std::chrono::system_clock::now();
+        auto deadline = foundLoan->getDeadline();
+
+        if (now > deadline) {
+            auto duration = std::chrono::duration_cast<std::chrono::hours>(now - deadline);
+            int daysLate = duration.count() / 24;
+
+            if (daysLate > 0) {
+                double penalty = daysLate * 0.10;
+                if (penalty > 15.0) penalty = 15.0;
+
+                std::cout << "\n [STOP] Loan has a delay of " << daysLate << " days.\n";
+                std::cout << " penalty to pay: " << penalty << " euros.\n";
+
+              foundUser->addSanction(penalty); 
+                 std::cout << " (Added to user's debt history)\n";
+            }
+        }
                // que desmadre es esto, apuntador a prestamo que tiene atributo del item del prestamo encontrado, dentro de este item ves el status
-                    if (foundLoan->getItem()->getStatus() == true) {
+                    if (foundLoan->getItem()->getStatus() == false) {
                     std::cout << "Item is already in library \n";
                     }
-                    else {
-                        auto now = std::chrono::system_clock::now();
-                      
-                        foundUser->decrementCount(); 
-                      //  to do destruye el prestamo de la lista
-                        std::cout << "\n return item successful\n";
-                    }
+                 foundUser->decrementCount();
+                foundLoan->getItem()->setStatus(false); // Libro disponible
 
-                } else {
-                    std::cout << "Item not found: \n";
-                    
-                }  
+        
+        bool loanDeleted = false; //  controlar el bucle
+        auto it = loans.begin();  
 
+        while (it != loans.end() && !loanDeleted) {
+            if (*it == foundLoan) {
+                // 1. Borramos la memoria
+                delete foundLoan;
 
- }
-   
+                // Borramos del vector y actualizamos el iterador 
+                it = loans.erase(it);
+
+                
+                loanDeleted = true; 
+                
+                std::cout << "\n Return item successful.\n";
+            } else {
+                // Solo avanzamos si NO hemos borrado nada
+                ++it; 
+            }
+        }
+
+    } else {
+        std::cout << "Item not found / Not currently on loan.\n";
+    }
+}
 void Library::addUser(){
 
 std::string newUserN;

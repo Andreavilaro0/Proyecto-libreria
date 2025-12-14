@@ -29,6 +29,8 @@ public:
   void setTitle(std::string _title);
    void setAuthor(std::string _author);
     void setCategory(std::string _category);
+    
+        virtual ~Item() {}
 };
 
 #endif // ITEM_H

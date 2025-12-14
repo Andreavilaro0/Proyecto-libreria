@@ -18,8 +18,18 @@ Loan::Loan(User* _user, Item* _item, std::chrono::system_clock::time_point _star
     
 };
 
-  Item* Loan::getItem(){
+  Item* Loan::getItem()const{
     return item;
   }
+  
 
+  std::chrono::system_clock::time_point Loan::getStartDay() {
+    return startDay;
+}
+std::chrono::system_clock::time_point Loan::getDeadline() {
+    return deadline;
+}
+std::chrono::system_clock::time_point Loan::getreturnDay() {
+    return returnDay;
+}
    
