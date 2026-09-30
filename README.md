@@ -1,159 +1,101 @@
-# Proyecto Librería (C++17) — Gestión de Biblioteca
+# Library management system (C++17)
+
+**English** · [Español](README.es.md)
 
 ![C++](https://img.shields.io/badge/C%2B%2B-17-blue)
 ![CMake](https://img.shields.io/badge/CMake-3.16%2B-brightgreen)
 ![Platforms](https://img.shields.io/badge/Platforms-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
 
-Sistema de gestión de biblioteca por consola en **C++17** con **persistencia en CSV**.  
-Permite administrar **ítems**, **usuarios** y **préstamos**, leyendo y guardando datos en archivos `.csv`.
+A terminal application to manage a university library. It handles **items** (books, e-books and
+journals), **users** and **loans**, and it saves all the data in **CSV files**.
+
+University project for the **Object-Oriented Programming** course at UDIT (Madrid), 2025–2026.
+**Authors:** Andrea Ávila and Lucas Henrique Silva de Carvalho.
 
 ---
 
-## Contenido
+## Features
 
-- [Requisitos](#requisitos)
-- [Estructura del proyecto](#estructura-del-proyecto)
-- [Compilación](#compilación)
-  - [macOS / Linux](#macos--linux)
-  - [Windows](#windows)
-- [Ejecución](#ejecución)
-- [CSV y rutas](#csv-y-rutas)
-- [Ejemplo de uso rápido](#ejemplo-de-uso-rápido)
-- [Troubleshooting](#troubleshooting)
-- [Notas de portabilidad](#notas-de-portabilidad)
-- [Declaración de autoría](#declaración-de-autoría)
-- [Licencia](#licencia)
+- Add, edit and remove items and users.
+- Lend and return items, with deadlines and penalties for late returns.
+- Search by title, author, category or date, and list all records.
+- A report of active loans by user role.
+- Data is loaded from CSV files at start-up and saved again when you exit.
 
----
+## Design
 
-## Requisitos
+- **Inheritance and polymorphism:** `Item` is the base class. `Book`, `Ebook` and `Journal` extend
+  it. The catalog stores all of them together as `std::vector<Item*>`.
+- **Separate classes by responsibility:** `User`, `Loan`, `Library` (the menus and the business
+  rules) and `Filesystem` (reading and writing the CSV files).
+- **Portable build with CMake:** the same project builds on Windows (MSVC or MinGW), macOS (Clang)
+  and Linux (GCC or Clang). It compiles with `-Wall -Wextra -Wpedantic`, and CMake copies the CSV
+  files next to the executable after each build.
 
-- **CMake 3.16+**
-- Compilador con soporte **C++17**
-  - **Windows:** Visual Studio (MSVC) / MinGW
-  - **macOS:** Xcode Command Line Tools (Clang)
-  - **Linux:** GCC o Clang
-
-Comprobar versiones:
-```bash
-cmake --version
-```
-
----
-
-## Estructura del proyecto
-
-Resumen de carpetas y archivos principales (referencia de organización):
+## Project structure
 
 ```text
 .
 ├── CMakeLists.txt
-├── README.md
-├── main.cpp
-├── Library.cpp
-├── Library.h
+├── main.cpp            # main menu and program loop
+├── Library.cpp/.h      # menus and library operations
 └── Library
-    ├── File
-    │   ├── Filesystem.cpp
-    │   ├── Filesystem.h
-    │   ├── items.csv
-    │   ├── user.csv
-    │   └── loan.csv
-    ├── Item
-    │   ├── Item.h
-    │   └── Item.cpp
-    ├── User
-    │   ├── User.h
-    │   └── User.cpp
-    └── Loan
-        ├── Loan.h
-        └── Loan.cpp
+    ├── File            # Filesystem (CSV read/write) and the CSV data files
+    ├── Item            # Item, Book, E-book, Journal
+    ├── User            # User
+    └── Loan            # Loan
 ```
 
----
+## Build and run
 
-## Compilación
+You need **CMake 3.16+** and a **C++17** compiler.
 
-### macOS / Linux
+macOS / Linux:
+
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
-```
-
-### Windows
-```powershell
-cmake -S . -B build
-cmake --build build --config Release
-```
-
----
-
-## Ejecución
-
-### macOS / Linux
-```bash
 ./build/ProyectoLibreria
 ```
 
-### Windows
+Windows:
+
 ```powershell
+cmake -S . -B build
+cmake --build build --config Release
 .\build\Release\ProyectoLibreria.exe
 ```
 
----
+## CSV files
 
-## CSV y rutas
+The program uses relative paths:
 
-El programa utiliza rutas relativas para los CSV:
 - `Library/File/items.csv`
 - `Library/File/user.csv`
 - `Library/File/loan.csv`
 
-Si ejecutas el binario desde otra carpeta, asegúrate de incluir también:
-```
-Library/File/
-```
-con los `.csv` dentro.
+If you see *"No se pudo abrir el fichero"* ("could not open the file"), run the program from a
+folder that contains `Library/File/` with the three CSV files. The build already copies them next
+to the executable.
 
----
+## Known issues
 
-## Ejemplo de uso rápido
+- In the main menu, option **3 (Handle Loans)** opens the user menu instead of the loan menu.
+- The project has no automated tests yet.
 
-1) Compila con CMake (sección “Compilación”).  
-2) Ejecuta el programa (sección “Ejecución”).  
-3) Verifica que carga los CSV y realiza operaciones desde el menú.
+## What I learned
 
----
+- How to design a class hierarchy and use polymorphism with a shared base class.
+- Manual memory management with `new` and `delete` for the collections. A next step would be to
+  use smart pointers (`std::unique_ptr`).
+- How to structure a C++ project with CMake so it builds on three operating systems.
 
-## Troubleshooting
+## Authorship
 
-### “No se pudo abrir el fichero …”
-Causa típica: el programa no encuentra los CSV por rutas relativas.
+This is original work by Andrea Ávila and Lucas Henrique Silva de Carvalho for the Object-Oriented
+Programming course (2025/2026). ChatGPT was used to help write this README and the `CMakeLists.txt`.
+The full authorship statement (in Spanish) is in [README.es.md](README.es.md#declaración-de-autoría).
 
-- Asegúrate de tener `Library/File/items.csv`, `Library/File/user.csv`, `Library/File/loan.csv`
-- Ejecuta desde donde existan esas rutas:
-  - macOS/Linux: `./build/ProyectoLibreria`
-  - Windows: `.\build\Release\ProyectoLibreria.exe`
+## License
 
----
-
-## Notas de portabilidad
-
-No existe un único ejecutable que funcione igual en **Windows/macOS/Linux**.  
-Lo portable es el **sistema de build con CMake**, que genera el ejecutable nativo en cada plataforma.
-
----
-
-## Declaración de autoría
-
-Nosotros, **Andrea Avila Rodriguez** y **Lucas Henrique Silva de Carvalho**, declaramos que el proyecto **“Gestión de Biblioteca”** (C++17), así como su documentación y ficheros asociados, es un trabajo **original** realizado por nosotros para la asignatura **Programación Orientada a Objetos** en el curso **2025/2026**.
-
-Hemos utilizado únicamente recursos externos de carácter general (por ejemplo, documentación oficial de C++/CMake y material docente).TAambien chat gpt para realizar este README y CMAKE, Cuando corresponde, las ideas o fragmentos de referencia han sido consultados de forma legítima y sin plagio. **Nos responsabilizamos** del contenido y del funcionamiento del código entregado.
-
-Fecha: **14/12/2026**  
-
-
-
-## Licencia
-
-Proyecto académico / educativo.
+Academic / educational project.
